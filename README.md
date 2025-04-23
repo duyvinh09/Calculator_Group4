@@ -2,7 +2,7 @@
 
 ## Tổng quan dự án
 
-Ứng dụng Máy tính được phát triển bởi Nhóm 4 trong khuôn khổ môn học CMU-CS 246: Application Development Practices (2025S), do ThS. Nguyễn Đăng Quang Huy giảng dạy. Ứng dụng hỗ trợ các phép toán cơ bản, tính toán khoa học nâng cao và các tính năng tương tác người dùng, mang lại trải nghiệm thân thiện và mạnh mẽ.
+Ứng dụng Máy tính được phát triển bởi Nhóm 4 trong khuôn khổ môn học CMU-CS 246: Application Development Practices (2025S), do [ThS. Nguyễn Đăng Quang Huy](https://pdaotao.duytan.edu.vn/PERSION_Detail/?PERSION_ID=80) giảng dạy. Ứng dụng hỗ trợ các phép toán cơ bản, tính toán khoa học nâng cao và các tính năng tương tác người dùng, mang lại trải nghiệm thân thiện và mạnh mẽ.
 
 ## Thành viên nhóm
 
