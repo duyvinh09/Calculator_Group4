@@ -8,13 +8,14 @@ import java.awt.CardLayout;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 
-
 /**
  *
  * @author dinhduyvinh
  */
 public class calculatorForm extends javax.swing.JFrame {
+
     CardLayout cardLayout;
+
     public calculatorForm() {
         initComponents();
         cardLayout = (CardLayout) historyMemoryForm.getLayout();
@@ -22,7 +23,7 @@ public class calculatorForm extends javax.swing.JFrame {
         setLocationRelativeTo(null); // Đưa app sau khi chạy vào giữa màn hình
         setResizable(false); // chặn đổi size app
     }
-    
+
     private ArrayList<String> history = new ArrayList<>(); // Lưu danh sách phép tính
     private DefaultListModel<String> listModel = new DefaultListModel<>(); // Model cho JList
     private double num1 = 0, num2 = 0;// Tạo hai biến num1, num 2 để luu giá trị nhập vào
@@ -239,7 +240,7 @@ public class calculatorForm extends javax.swing.JFrame {
         });
 
         btnSqrt.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnSqrt.setText("²√2");
+        btnSqrt.setText("²√x");
         btnSqrt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSqrtActionPerformed(evt);
@@ -528,9 +529,10 @@ public class calculatorForm extends javax.swing.JFrame {
         historyPanel.setLayout(historyPanelLayout);
         historyPanelLayout.setHorizontalGroup(
             historyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, historyPanelLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(historyPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 333, Short.MAX_VALUE)
+                .addContainerGap())
         );
         historyPanelLayout.setVerticalGroup(
             historyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -545,7 +547,7 @@ public class calculatorForm extends javax.swing.JFrame {
         memoryPanel.setLayout(memoryPanelLayout);
         memoryPanelLayout.setHorizontalGroup(
             memoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, 258, Short.MAX_VALUE)
+            .addComponent(jTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, 345, Short.MAX_VALUE)
         );
         memoryPanelLayout.setVerticalGroup(
             memoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -571,10 +573,10 @@ public class calculatorForm extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(historyMemoryForm, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addContainerGap())
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(76, 76, 76)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(119, 119, 119))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -590,28 +592,36 @@ public class calculatorForm extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     // Hàm định dạng số nguyên
-    private String formatNumber(double num){
+
+    private String formatNumber(double num) {
         return (num == Math.floor(num)) ? String.valueOf((int) num) : String.valueOf(num);
     }
+
     // Hàm tính toán
-    private double  calculate(double a, String op, double b){
-        switch(op){
-            case "+": return a + b;
-            case "-": return a - b;
-            case "x": return a * b; 
+    private double calculate(double a, String op, double b) {
+        switch (op) {
+            case "+":
+                return a + b;
+            case "-":
+                return a - b;
+            case "x":
+                return a * b;
             case "/":
-                if (b == 0) return 0;
+                if (b == 0) {
+                    return 0;
+                }
                 return a / b;
-            default: return b;
+            default:
+                return b;
         }
     }
-    
+
     // Hàm xử lí toán tử
     private void operatorActionPerformed(String newOperator) {
         try {
             double temp = Double.parseDouble(txtDisplay.getText());
 
-            if (!operator.isEmpty()) { 
+            if (!operator.isEmpty()) {
                 // Nếu đã có phép toán trước đó, thực hiện tính toán
                 num2 = temp;
                 num1 = calculate(num1, operator, num2);
@@ -633,8 +643,8 @@ public class calculatorForm extends javax.swing.JFrame {
             txtDisplay.setText(e.getMessage());
         }
     }
-    
-    
+
+
     private void txtDisplayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDisplayActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtDisplayActionPerformed
@@ -777,6 +787,15 @@ public class calculatorForm extends javax.swing.JFrame {
 
     private void btnBangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBangActionPerformed
         try {
+            String expression = txtDisplay.getText().trim();
+
+            // Nếu là biểu thức đặc biệt (giai thừa)
+            if (expression.endsWith("!")) {
+                // Gọi xử lý riêng
+                tinhGiaiThua();
+                return; // Không xử lý tiếp các phép + - * /
+            }
+            // xử lí các phép tính +-*/
             double temp = Double.parseDouble(txtDisplay.getText());
 
             if (!operator.isEmpty()) {
@@ -791,6 +810,7 @@ public class calculatorForm extends javax.swing.JFrame {
 
                 // Thêm vào lịch sử
                 listModel.addElement(saveHistory);
+
             }
             operator = "";
             newInput = true; // Đánh dấu để nhập số mới
@@ -799,6 +819,8 @@ public class calculatorForm extends javax.swing.JFrame {
         } catch (ArithmeticException e) {
             txtDisplay.setText(e.getMessage());
         }
+
+
     }//GEN-LAST:event_btnBangActionPerformed
 
     private void btnCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCActionPerformed
@@ -866,120 +888,137 @@ public class calculatorForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNumber0ActionPerformed
 
     private void btnSinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSinActionPerformed
-       try {
-        double x = Math.toRadians(Double.parseDouble(txtDisplay.getText()));
-          // Chuyển độ sang radian và tính sin
-        txtDisplay.setText(String.valueOf(Math.sin(x)));
-    } catch (Exception ex) {
-        txtDisplay.setText("Lỗi");
-    }
+
+        try {
+            // Lấy giá trị hiện tại từ txtDisplay
+            double angle = Double.parseDouble(txtDisplay.getText().trim());
+
+            // Tính sin (theo radian)
+            double result = Math.sin(Math.toRadians(angle)); // Nếu bạn đang nhập bằng độ
+
+            // Tạo chuỗi kết quả
+            String expression = "Sin(" + angle + ") = " + result;
+
+            // Hiển thị kết quả ra màn hình
+            txtDisplay.setText(String.valueOf(result));
+
+            // Lưu vào lịch sử
+            listModel.addElement(expression);
+
+        } catch (NumberFormatException e) {
+            txtDisplay.setText("Lỗi nhập!");
+        }
+
+
     }//GEN-LAST:event_btnSinActionPerformed
 
     private void btnCotActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCotActionPerformed
-       try {
-        double deg = Double.parseDouble(txtDisplay.getText().trim());
-
-        // Chuyển độ sang radian để tính toán
-        double rad = Math.toRadians(deg);
-        double tan = Math.tan(rad);
-
-        // cot(x) = 1 / tan(x), nếu tan = 0 thì cot không xác định
-        if (tan == 0) {
-            txtDisplay.setText("Không xác định");
-            return;
+        try {
+            double angle = Double.parseDouble(txtDisplay.getText().trim());
+            double result = 1.0 / Math.tan(Math.toRadians(angle));
+            String expression = "Cot(" + angle + ") = " + result;
+            txtDisplay.setText(String.valueOf(result));
+            listModel.addElement(expression);
+        } catch (ArithmeticException | NumberFormatException e) {
+            txtDisplay.setText("Lỗi!");
         }
-
-        txtDisplay.setText(String.valueOf(1 / tan));
-    } catch (Exception ex) {
-        txtDisplay.setText("Lỗi");
-    }
     }//GEN-LAST:event_btnCotActionPerformed
 
     private void btntanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btntanActionPerformed
         try {
-        double x = Math.toRadians(Double.parseDouble(txtDisplay.getText()));
-          // Chuyển độ sang radian và tính tan
-        txtDisplay.setText(String.valueOf(Math.tan(x)));
-    } catch (Exception ex) {
-        txtDisplay.setText("Lỗi");
-    }
+            double angle = Double.parseDouble(txtDisplay.getText().trim());
+            double result = Math.tan(Math.toRadians(angle));
+            String expression = "Tan(" + angle + ") = " + result;
+            txtDisplay.setText(String.valueOf(result));
+            listModel.addElement(expression);
+        } catch (NumberFormatException e) {
+            txtDisplay.setText("Lỗi nhập!");
+        }
     }//GEN-LAST:event_btntanActionPerformed
 
     private void btnCosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCosActionPerformed
         try {
-        double x = Math.toRadians(Double.parseDouble(txtDisplay.getText()));
-         // Chuyển độ sang radian và tính cos
-        txtDisplay.setText(String.valueOf(Math.cos(x)));
-    } catch (Exception ex) {
-        txtDisplay.setText("Lỗi");
-    }
+            double angle = Double.parseDouble(txtDisplay.getText().trim());
+            double result = Math.cos(Math.toRadians(angle));
+            String expression = "Cos(" + angle + ") = " + result;
+            txtDisplay.setText(String.valueOf(result));
+            listModel.addElement(expression);
+        } catch (NumberFormatException e) {
+            txtDisplay.setText("Lỗi nhập!");
+        }
     }//GEN-LAST:event_btnCosActionPerformed
 
     private void btnGiaithuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGiaithuaActionPerformed
-         try {
-            int num = Integer.parseInt(txtDisplay.getText());// lay gia tri tu o nhap chuyen thanh so nguyen
-            if (num < 0) {
-                txtDisplay.setText("Không có giai thừa âm");//khong tinh so am
+
+        String input = txtDisplay.getText().trim();
+        if (!input.isEmpty() && !input.endsWith("!")) {
+            txtDisplay.setText(input + "!");
+        }
+
+    }//GEN-LAST:event_btnGiaithuaActionPerformed
+    public void tinhGiaiThua() {
+        try {
+            String input = txtDisplay.getText().trim(); // Lấy chuỗi biểu thức từ màn hình
+
+            // Xử lý giai thừa n!
+            if (input.endsWith("!")) {
+                String numStr = input.substring(0, input.length() - 1);
+                int num = Integer.parseInt(numStr);
+                long result = 1;
+                for (int i = 2; i <= num; i++) {
+                    result *= i;
+                }
+                txtDisplay.setText(String.valueOf(result));
+                // Lưu vào lịch sử
+                listModel.addElement(input + " = " + result);
                 return;
             }
 
-            long result = 1;// khoi tao ket qua bang 1
-            for (int i = 2; i <= num; i++) {
-                result *= i;//tinh giai thua
-            }
-
-            txtDisplay.setText(String.valueOf(result));
-        } catch (NumberFormatException ex) {
-            txtDisplay.setText("Không hợp lệ");
+        } catch (Exception ex) {
+            txtDisplay.setText("Lỗi");
         }
-    }//GEN-LAST:event_btnGiaithuaActionPerformed
+    }
 
     private void btnChuyenDoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChuyenDoiActionPerformed
-       try {
-        double val = Double.parseDouble(txtDisplay.getText());
-        String result;
-        if (val > 2 * Math.PI) {
-            // Chuyển từ Độ sang Radian
-            result = String.valueOf(Math.toRadians(val));
-        } else {
-            // Chuyển từ Radian sang Độ
-            result = String.valueOf(Math.toDegrees(val));
+        try {
+            double val = Double.parseDouble(txtDisplay.getText());
+            String result;
+            if (val > 2 * Math.PI) {
+                // Chuyển từ Độ sang Radian
+                result = String.valueOf(Math.toRadians(val));
+            } else {
+                // Chuyển từ Radian sang Độ
+                result = String.valueOf(Math.toDegrees(val));
+            }
+            txtDisplay.setText(result);
+        } catch (Exception ex) {
+            txtDisplay.setText("Lỗi");
         }
-        txtDisplay.setText(result);
-    } catch (Exception ex) {
-        txtDisplay.setText("Lỗi");
-    }
     }//GEN-LAST:event_btnChuyenDoiActionPerformed
 
     private void btnLog10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLog10ActionPerformed
-       try {
-           //chuyen thanh so thuc gia tri nhap vao
-        double x = Double.parseDouble(txtDisplay.getText().trim());
-        // khong tinh voi truong hop x<=0
-        if (x <= 0) {
-            txtDisplay.setText("Không hợp lệ");
-            return;
+        try {
+            double value = Double.parseDouble(txtDisplay.getText().trim());
+            double result = Math.log10(value);
+            String expression = "Log(" + value + ") = " + result;
+            txtDisplay.setText(String.valueOf(result));
+            listModel.addElement(expression);
+        } catch (NumberFormatException e) {
+            txtDisplay.setText("Lỗi nhập!");
         }
-        // tinh log co so 10
-        txtDisplay.setText(String.valueOf(Math.log10(x)));
-    } catch (Exception ex) {
-        txtDisplay.setText("Lỗi");
-    }
     }//GEN-LAST:event_btnLog10ActionPerformed
 
     private void btnLnxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLnxActionPerformed
-         try {
-        double x = Double.parseDouble(txtDisplay.getText().trim());
-        if (x <= 0) {
-            txtDisplay.setText("Không hợp lệ");
-            return;
+        try {
+            double value = Double.parseDouble(txtDisplay.getText().trim());
+            double result = Math.log(value);
+            String expression = "Ln(" + value + ") = " + result;
+            txtDisplay.setText(String.valueOf(result));
+            listModel.addElement(expression);
+        } catch (NumberFormatException e) {
+            txtDisplay.setText("Lỗi nhập!");
         }
-        // tinh ln
-        txtDisplay.setText(String.valueOf(Math.log(x)));
-    } catch (Exception ex) {
-        txtDisplay.setText("Lỗi");
-    }
-        
+
     }//GEN-LAST:event_btnLnxActionPerformed
 
     /**
