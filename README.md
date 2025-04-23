@@ -33,7 +33,7 @@
 - **Nguyễn Hoàng Nhật**\
   **Nhiệm vụ**: Biểu thức & Clipboard
 
-  - Hỗ trợ tính toán biểu thức phức tạp (ví dụ: "5 + (3 \* 2) - √9").
+  - Hỗ trợ tính toán biểu thức phức tạp (ví dụ: "5 + (3 * 2) - √9").
   - Chức năng sao chép/dán (copy/paste) kết quả.
 
 ## Tính năng
@@ -66,7 +66,7 @@
 ### Tính năng bổ sung
 
 - Sao chép/dán kết quả vào/ra clipboard.
-- Hỗ trợ tính toán biểu thức phức tạp (ví dụ: "5 + (3 \* 2) - √9").
+- Hỗ trợ tính toán biểu thức phức tạp (ví dụ: "5 + (3 * 2) - √9").
 - Xử lý lỗi nâng cao với thông báo chi tiết cho các đầu vào không hợp lệ (ví dụ: chia cho 0, "5++2", "√-9").
 
 ### Xử lý lỗi
@@ -77,28 +77,33 @@
 ## Cài đặt
 
 1. **Sao chép kho lưu trữ**:
+   - Tải mã nguồn từ GitHub:
+     ```bash
+     git clone https://github.com/duyvinh09/Calculator_Group4.git
+     ```
+   - Hoặc tải file ZIP từ GitHub và giải nén.
 
-   ```bash
-   git clone https://github.com/duyvinh09/Calculator_Group4.git
-   ```
+2. **Mở dự án trong IDE**:
+   - **NetBeans**:
+     - Mở NetBeans, chọn `File > Open Project`.
+     - Điều hướng đến thư mục `Calculator_Group4` và chọn dự án.
+     - Đảm bảo đã cài đặt Java (JDK 17 trở lên) và Maven được cấu hình trong NetBeans.
+   - **VSCode**:
+     - Mở VSCode, chọn `File > Open Folder` và chọn thư mục `Calculator_Group4`.
+     - Cài đặt extension `Java Extension Pack` và `Maven for Java` trong VSCode.
+     - Đảm bảo đã cài đặt Java (JDK 17 trở lên) và Maven trên máy.
 
-2. **Di chuyển đến thư mục dự án**:
-
-   ```bash
-   cd calculator-app
-   ```
-
-3. **Cài đặt phụ thuộc**: Đảm bảo đã cài Java (JDK 17 trở lên). Chạy:
-
-   ```bash
-   mvn install
-   ```
+3. **Cài đặt phụ thuộc**:
+   - Trong **NetBeans**: Nhấp chuột phải vào dự án, chọn `Build` hoặc `Clean and Build` để tự động cài đặt các phụ thuộc Maven.
+   - Trong **VSCode**: Mở terminal trong VSCode (Ctrl+`), chạy:
+     ```bash
+     mvn install
+     ```
+     Hoặc nhấp vào biểu tượng Maven ở sidebar và chọn `install`.
 
 4. **Chạy ứng dụng**:
-
-   ```bash
-   mvn exec:java
-   ```
+   - Trong **NetBeans**: Nhấp chuột phải vào file `Main.java` (hoặc file chính của ứng dụng), chọn `Run File`.
+   - Trong **VSCode**: Nhấp chuột phải vào file `Main.java`, chọn `Run Java` hoặc sử dụng nút `Run` trong editor.
 
 ## Hướng dẫn sử dụng
 
@@ -114,9 +119,3 @@
   - Chia cho 0.
   - Biểu thức không hợp lệ (ví dụ: "5++2", "√-9").
   - Số lớn và các tình huống tràn số.
-
-- Các bài kiểm thử nằm trong thư mục `src/test` và có thể chạy bằng:
-
-  ```bash
-  mvn test
-  ```
