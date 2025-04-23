@@ -5,8 +5,16 @@
 package calculator;
 
 import java.awt.CardLayout;
+import java.awt.Color;
+import java.awt.Font;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
+import javax.swing.JColorChooser;
+import javax.swing.JDialog;
+import javax.swing.JList;
+import javax.swing.JScrollPane;
+import javax.swing.JOptionPane;
 
 
 /**
@@ -15,12 +23,20 @@ import javax.swing.DefaultListModel;
  */
 public class calculatorForm extends javax.swing.JFrame {
     CardLayout cardLayout;
+    private boolean darkMode = false; // Thêm biến để theo dõi trạng thái dark mode
+    private ImageIcon darkIcon;
+    private ImageIcon lightIcon;
+    
     public calculatorForm() {
         initComponents();
         cardLayout = (CardLayout) historyMemoryForm.getLayout();
         listMemory.setModel(listModel);
         setLocationRelativeTo(null); // Đưa app sau khi chạy vào giữa màn hình
         setResizable(false); // chặn đổi size app
+        
+        darkIcon = new ImageIcon(getClass().getResource("/calculator/moon.png")); // Icon mặt trăng cho dark mode
+        lightIcon = new ImageIcon(getClass().getResource("/calculator/sun.png")); // Icon mặt trời cho light mode
+        applyLightMode(); // Áp dụng light mode mặc định khi khởi động
     }
     
     private ArrayList<String> history = new ArrayList<>(); // Lưu danh sách phép tính
@@ -30,6 +46,151 @@ public class calculatorForm extends javax.swing.JFrame {
     private String operator = "";//biến chỉ toán tử
     private boolean newInput = true; // Đánh dấu để nhập số mới
     private String saveHistory = "";// Để luu toàn bộ phép tính
+    
+    // Phương thức áp dụng Dark Mode
+    private void applyDarkMode() {
+        // Đặt màu nền
+        mainPanel.setBackground(new Color(30, 30, 30));
+        calculatorForm.setBackground(new Color(30, 30, 30));
+        historyMemoryForm.setBackground(new Color(30, 30, 30));
+        historyPanel.setBackground(new Color(30, 30, 30));
+        memoryPanel.setBackground(new Color(30, 30, 30));
+        
+        // Đặt màu cho display
+        txtDisplay.setBackground(new Color(50, 50, 50));
+        txtDisplay.setForeground(Color.WHITE);
+        txtDisplay.setBorder(javax.swing.BorderFactory.createTitledBorder(
+            null, "CALCULATOR", 
+            javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, 
+            javax.swing.border.TitledBorder.DEFAULT_POSITION, 
+            new java.awt.Font("Segoe UI", 1, 12), Color.WHITE));
+        
+        // Đặt màu cho các nút
+        styleButtons(new Color(50, 50, 50), Color.WHITE);
+        
+        // Đặt màu cho danh sách lịch sử
+        listMemory.setBackground(new Color(50, 50, 50));
+        listMemory.setForeground(Color.WHITE);
+        
+        // Đặt màu cho nhãn
+        // jLabel1.setForeground(Color.WHITE);
+        
+        // Cập nhật trạng thái và văn bản nút
+        darkMode = true;
+        btnToggleMode.setIcon(lightIcon); // Hiển thị icon mặt trời khi ở dark mode (để chuyển sang light mode)
+        btnToggleMode.setToolTipText("Chuyển sang Light Mode");
+        btnToggleMode.setText("");
+    }
+    
+    // Phương thức áp dụng Light Mode
+    private void applyLightMode() {
+        // Đặt màu nền
+        mainPanel.setBackground(new Color(238, 238, 238));
+        calculatorForm.setBackground(new Color(238, 238, 238));
+        historyMemoryForm.setBackground(new Color(238, 238, 238));
+        historyPanel.setBackground(new Color(238, 238, 238));
+        memoryPanel.setBackground(new Color(238, 238, 238));
+        
+        // Đặt màu cho display
+        txtDisplay.setBackground(Color.WHITE);
+        txtDisplay.setForeground(Color.BLACK);
+        txtDisplay.setBorder(javax.swing.BorderFactory.createTitledBorder(
+            null, "CALCULATOR", 
+            javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, 
+            javax.swing.border.TitledBorder.DEFAULT_POSITION, 
+            new java.awt.Font("Segoe UI", 1, 12), Color.BLACK));
+        
+        // Đặt màu cho các nút
+        styleButtons(new Color(240, 240, 240), Color.BLACK);
+        
+        // Đặt màu cho danh sách lịch sử
+        listMemory.setBackground(Color.WHITE);
+        listMemory.setForeground(Color.BLACK);
+        
+        // Đặt màu cho nhãn
+        // jLabel1.setForeground(Color.BLACK);
+        
+        // Cập nhật trạng thái và văn bản nút
+        darkMode = false;
+        btnToggleMode.setIcon(darkIcon); // Hiển thị icon mặt trăng khi ở light mode (để chuyển sang dark mode)
+        btnToggleMode.setToolTipText("Chuyển sang Dark Mode");
+        btnToggleMode.setText("");
+    }
+    
+    // Phương thức hỗ trợ để đặt kiểu cho tất cả các nút
+    private void styleButtons(Color bgColor, Color fgColor) {
+        javax.swing.JButton[] buttons = {
+            btnNumber0, btnDoiDau, btnDot, btnBang, btnNumber2, btnNumber1, btnNumber3,
+            btnCong, btnTru, btnNumber4, btnNumber5, btnNumber6, btnNumber7, btnNumber9,
+            btnNumber8, btnNhan, btnnghichDao, btnPow, btnChia, btnSqrt, btnPhanTram,
+            btnDelete, btnCE, btnC
+        };
+        
+        for (javax.swing.JButton button : buttons) {
+            button.setBackground(bgColor);
+            button.setForeground(fgColor);
+        }
+        
+        // Giữ màu đặc biệt cho nút bằng
+        btnBang.setBackground(new Color(0, 153, 255));
+        btnBang.setForeground(Color.WHITE);
+    }
+    
+    // Phương thức áp dụng phông chữ cho các thành phần giao diện
+    private void applyFontToComponents(Font font) {
+        // Áp dụng phông chữ cho các nút
+        javax.swing.JButton[] buttons = {
+            btnNumber0, btnDoiDau, btnDot, btnBang, btnNumber2, btnNumber1, btnNumber3,
+            btnCong, btnTru, btnNumber4, btnNumber5, btnNumber6, btnNumber7, btnNumber9,
+            btnNumber8, btnNhan, btnnghichDao, btnPow, btnChia, btnSqrt, btnPhanTram,
+            btnDelete, btnCE, btnC
+        };
+        for (javax.swing.JButton button : buttons) {
+            button.setFont(font);
+        }
+        
+        // Áp dụng phông chữ cho txtDisplay
+        txtDisplay.setFont(font);
+        
+        // Áp dụng phông chữ cho listMemory
+        listMemory.setFont(font);
+        
+        // Áp dụng phông chữ cho jLabel1
+        jLabel1.setFont(font);
+        
+        // Áp dụng phông chữ cho nút toggle mode
+        btnToggleMode.setFont(font);
+    }
+
+    // Phương thức áp dụng màu nền tùy chỉnh
+    private void applyCustomBackground(Color color) {
+        mainPanel.setBackground(color);
+        calculatorForm.setBackground(color);
+        historyMemoryForm.setBackground(color);
+        historyPanel.setBackground(color);
+        memoryPanel.setBackground(color);
+        
+        // Điều chỉnh màu chữ và viền của txtDisplay dựa trên độ sáng của màu nền
+        float[] hsb = Color.RGBtoHSB(color.getRed(), color.getGreen(), color.getBlue(), null);
+        boolean isDarkBackground = hsb[2] < 0.5; // Nếu độ sáng < 50%, coi là nền tối
+        Color textColor = isDarkBackground ? Color.WHITE : Color.BLACK;
+        
+        txtDisplay.setBackground(color.brighter());
+        txtDisplay.setForeground(textColor);
+        txtDisplay.setBorder(javax.swing.BorderFactory.createTitledBorder(
+            null, "CALCULATOR", 
+            javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, 
+            javax.swing.border.TitledBorder.DEFAULT_POSITION, 
+            txtDisplay.getFont(), textColor));
+        
+        // Điều chỉnh màu chữ của listMemory và jLabel1
+        listMemory.setBackground(color.brighter());
+        listMemory.setForeground(textColor);
+        jLabel1.setForeground(textColor);
+        
+        // Cập nhật màu nút dựa trên chế độ tối/sáng
+        styleButtons(color.brighter(), textColor);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -67,6 +228,7 @@ public class calculatorForm extends javax.swing.JFrame {
         btnCE = new javax.swing.JButton();
         btnC = new javax.swing.JButton();
         txtDisplay = new javax.swing.JTextField();
+        btnToggleMode = new javax.swing.JToggleButton();
         historyMemoryForm = new javax.swing.JPanel();
         historyPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -74,6 +236,11 @@ public class calculatorForm extends javax.swing.JFrame {
         memoryPanel = new javax.swing.JPanel();
         jTextField3 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        JMenu = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem3 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -231,7 +398,7 @@ public class calculatorForm extends javax.swing.JFrame {
         });
 
         btnSqrt.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnSqrt.setText("²√2");
+        btnSqrt.setText("²√x");
         btnSqrt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSqrtActionPerformed(evt);
@@ -277,6 +444,15 @@ public class calculatorForm extends javax.swing.JFrame {
         txtDisplay.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtDisplayActionPerformed(evt);
+            }
+        });
+
+        btnToggleMode.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnToggleMode.setText("Dark/Light");
+        btnToggleMode.setActionCommand("btnToggleMode");
+        btnToggleMode.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnToggleModeActionPerformed(evt);
             }
         });
 
@@ -340,13 +516,16 @@ public class calculatorForm extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnDot, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnBang, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(btnBang, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnToggleMode))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         calculatorFormLayout.setVerticalGroup(
             calculatorFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(calculatorFormLayout.createSequentialGroup()
+                .addComponent(btnToggleMode)
+                .addGap(39, 39, 39)
                 .addComponent(txtDisplay, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(calculatorFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -421,15 +600,16 @@ public class calculatorForm extends javax.swing.JFrame {
         historyPanel.setLayout(historyPanelLayout);
         historyPanelLayout.setHorizontalGroup(
             historyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(historyPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, historyPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         historyPanelLayout.setVerticalGroup(
             historyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, historyPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 429, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 426, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -441,11 +621,11 @@ public class calculatorForm extends javax.swing.JFrame {
         memoryPanel.setLayout(memoryPanelLayout);
         memoryPanelLayout.setHorizontalGroup(
             memoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE)
+            .addComponent(jTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE)
         );
         memoryPanelLayout.setVerticalGroup(
             memoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, 441, Short.MAX_VALUE)
+            .addComponent(jTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, 438, Short.MAX_VALUE)
         );
 
         historyMemoryForm.add(memoryPanel, "card2");
@@ -454,6 +634,36 @@ public class calculatorForm extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("MEMORY");
         jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        JMenu.setText("Tùy chỉnh");
+
+        jMenuItem1.setText("Chọn phông chữ");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        JMenu.add(jMenuItem1);
+
+        jMenuItem2.setText("Chọn màu giao diện");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        JMenu.add(jMenuItem2);
+
+        jMenuItem3.setText("Reset về mặc định");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
+        JMenu.add(jMenuItem3);
+
+        jMenuBar1.add(JMenu);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -466,19 +676,19 @@ public class calculatorForm extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(historyMemoryForm, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(75, 75, 75)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(72, 72, 72))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(mainPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(30, 30, 30)
+                .addGap(24, 24, 24)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(historyMemoryForm, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(historyMemoryForm, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -495,7 +705,7 @@ public class calculatorForm extends javax.swing.JFrame {
             case "-": return a - b;
             case "x": return a * b; 
             case "/":
-                if (b == 0) return 0;
+                if (b == 0) throw new ArithmeticException("Lỗi!");
                 return a / b;
             default: return b;
         }
@@ -760,6 +970,58 @@ public class calculatorForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnNumber0ActionPerformed
 
+    private void btnToggleModeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnToggleModeActionPerformed
+        // TODO add your handling code here:
+        if (darkMode) {
+            applyLightMode();
+        } else {
+            applyDarkMode();
+        }
+    }//GEN-LAST:event_btnToggleModeActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        // Tạo danh sách phông chữ khả dụng
+        String[] fonts = {"Arial", "Times New Roman", "Courier New", "Verdana", "Tahoma"};
+        JList<String> fontList = new JList<>(fonts);
+        JScrollPane scrollPane = new JScrollPane(fontList);
+        
+        // Tạo dialog để chọn phông chữ
+        JDialog fontDialog = new JDialog(this, "Chọn phông chữ", true);
+        fontDialog.setLayout(new java.awt.FlowLayout());
+        fontDialog.add(scrollPane);
+        fontDialog.setSize(200, 200);
+        fontDialog.setLocationRelativeTo(this);
+        
+        fontList.addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting()) {
+                String selectedFont = fontList.getSelectedValue();
+                if (selectedFont != null) {
+                    // Áp dụng phông chữ mới với kích thước mặc định là 18
+                    applyFontToComponents(new Font(selectedFont, Font.PLAIN, 18));
+                    fontDialog.dispose();
+                }
+            }
+        });
+        
+        fontDialog.setVisible(true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+        // Mở JColorChooser để chọn màu nền
+        Color selectedColor = JColorChooser.showDialog(this, "Chọn màu nền", mainPanel.getBackground());
+        if (selectedColor != null) {
+            applyCustomBackground(selectedColor);
+        }
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        // TODO add your handling code here:
+        applyLightMode();
+        applyFontToComponents(new Font("Segoe UI", Font.PLAIN, 18));
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -769,23 +1031,6 @@ public class calculatorForm extends javax.swing.JFrame {
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(calculatorForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(calculatorForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(calculatorForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(calculatorForm.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -813,6 +1058,7 @@ public class calculatorForm extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenu JMenu;
     private javax.swing.JButton btnBang;
     private javax.swing.JButton btnC;
     private javax.swing.JButton btnCE;
@@ -835,12 +1081,17 @@ public class calculatorForm extends javax.swing.JFrame {
     private javax.swing.JButton btnPhanTram;
     private javax.swing.JButton btnPow;
     private javax.swing.JButton btnSqrt;
+    private javax.swing.JToggleButton btnToggleMode;
     private javax.swing.JButton btnTru;
     private javax.swing.JButton btnnghichDao;
     private javax.swing.JPanel calculatorForm;
     private javax.swing.JPanel historyMemoryForm;
     private javax.swing.JPanel historyPanel;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextField jTextField3;
     private javax.swing.JList<String> listMemory;
