@@ -5,8 +5,14 @@
 package calculator;
 
 import java.awt.CardLayout;
+import java.io.BufferedReader;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import javax.swing.JOptionPane;
 
 
 /**
@@ -21,6 +27,14 @@ public class calculatorForm extends javax.swing.JFrame {
         listMemory.setModel(listModel);
         setLocationRelativeTo(null); // Đưa app sau khi chạy vào giữa màn hình
         setResizable(false); // chặn đổi size app
+        try (BufferedReader reader = new BufferedReader(new FileReader("history.txt"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                listModel.addElement(line);
+            }
+        } catch (IOException e) {
+        System.out.println("Không thể đọc lịch sử: " + e.getMessage());
+        }       
     }
     
     private ArrayList<String> history = new ArrayList<>(); // Lưu danh sách phép tính
@@ -71,6 +85,9 @@ public class calculatorForm extends javax.swing.JFrame {
         historyPanel = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         listMemory = new javax.swing.JList<>();
+        txtSearch = new javax.swing.JTextField();
+        btnSearch = new javax.swing.JButton();
+        btnRemove = new javax.swing.JButton();
         memoryPanel = new javax.swing.JPanel();
         jTextField3 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
@@ -417,20 +434,55 @@ public class calculatorForm extends javax.swing.JFrame {
         listMemory.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jScrollPane1.setViewportView(listMemory);
 
+        txtSearch.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+
+        btnSearch.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        btnSearch.setIcon(new javax.swing.ImageIcon(getClass().getResource("/calculator/search.png"))); // NOI18N
+        btnSearch.setBorderPainted(false);
+        btnSearch.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSearchActionPerformed(evt);
+            }
+        });
+
+        btnRemove.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnRemove.setText("Delete all");
+        btnRemove.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRemoveActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout historyPanelLayout = new javax.swing.GroupLayout(historyPanel);
         historyPanel.setLayout(historyPanelLayout);
         historyPanelLayout.setHorizontalGroup(
             historyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(historyPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, historyPanelLayout.createSequentialGroup()
+                .addGroup(historyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(historyPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE))
+                    .addGroup(historyPanelLayout.createSequentialGroup()
+                        .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtSearch)))
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, historyPanelLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(btnRemove)
+                .addGap(15, 15, 15))
         );
         historyPanelLayout.setVerticalGroup(
             historyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, historyPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 429, Short.MAX_VALUE)
-                .addContainerGap())
+                .addContainerGap(11, Short.MAX_VALUE)
+                .addGroup(historyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtSearch)
+                    .addComponent(btnSearch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnRemove))
         );
 
         historyMemoryForm.add(historyPanel, "card2");
@@ -441,11 +493,11 @@ public class calculatorForm extends javax.swing.JFrame {
         memoryPanel.setLayout(memoryPanelLayout);
         memoryPanelLayout.setHorizontalGroup(
             memoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE)
+            .addComponent(jTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, 290, Short.MAX_VALUE)
         );
         memoryPanelLayout.setVerticalGroup(
             memoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, 441, Short.MAX_VALUE)
+            .addComponent(jTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
         );
 
         historyMemoryForm.add(memoryPanel, "card2");
@@ -466,10 +518,10 @@ public class calculatorForm extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(historyMemoryForm, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(78, 78, 78)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(72, 72, 72))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -488,6 +540,15 @@ public class calculatorForm extends javax.swing.JFrame {
     private String formatNumber(double num){
         return (num == Math.floor(num)) ? String.valueOf((int) num) : String.valueOf(num);
     }
+    //Hàm lưu lịch sử vào file txt
+    private void writeHistoryToFile(String history) {
+    try (BufferedWriter writer = new BufferedWriter(new FileWriter("history.txt", true))) {
+        writer.write(history);
+        writer.newLine();
+    } catch (IOException e) {
+        System.out.println("Lỗi khi ghi file: " + e.getMessage());
+    }
+}
     // Hàm tính toán
     private double  calculate(double a, String op, double b){
         switch(op){
@@ -686,6 +747,8 @@ public class calculatorForm extends javax.swing.JFrame {
 
                 // Thêm vào lịch sử
                 listModel.addElement(saveHistory);
+                 // Ghi lịch sử vào file
+                writeHistoryToFile(saveHistory);
             }
             operator = "";
             newInput = true; // Đánh dấu để nhập số mới
@@ -759,6 +822,52 @@ public class calculatorForm extends javax.swing.JFrame {
             txtDisplay.setText(txtDisplay.getText() + "0");
         }
     }//GEN-LAST:event_btnNumber0ActionPerformed
+
+    private void btnSearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSearchActionPerformed
+        // Lấy nội dung tìm kiếm từ ô nhập và loại bỏ tất cả khoảng trắng
+        String keyword = txtSearch.getText().trim().replaceAll("\\s+", "").toLowerCase();
+
+        if (keyword.isEmpty()) {
+            listMemory.setModel(listModel); // gán lại model gốc
+            return;
+        }
+
+        // Tạo một model mới để chứa kết quả lọc
+        DefaultListModel<String> filteredModel = new DefaultListModel<>();
+
+        // Duyệt từng dòng lịch sử trong listModel gốc
+        for (int i = 0; i < listModel.size(); i++) {
+            String entry = listModel.get(i); // lấy dòng hiện tại từ lịch sử
+
+            // Chỉ lấy phần biểu thức trước dấu "=" (bỏ kết quả)
+            // Sau đó bỏ khoảng trắng và chuyển về chữ thường để so sánh
+            String expressionOnly = entry.split("=")[0].replaceAll("\\s+", "").toLowerCase();
+
+            // Nếu biểu thức chứa từ khóa tìm kiếm thì thêm vào danh sách lọc
+            if (expressionOnly.contains(keyword)) {
+            filteredModel.addElement(entry); // thêm dòng gốc vào model mới
+            }
+        }   
+
+    // Cập nhật listMemory để hiển thị danh sách lọc
+    listMemory.setModel(filteredModel);
+    }//GEN-LAST:event_btnSearchActionPerformed
+
+    private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
+        int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete all history?", "Confirm", JOptionPane.YES_NO_OPTION);
+    if (confirm == JOptionPane.YES_OPTION) {
+        listModel.clear();
+        listMemory.setModel(listModel);
+
+        // Ghi đè file rỗng
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("history.txt"))) {
+            writer.write("");
+        } catch (IOException e) {
+            System.out.println("Lỗi khi xóa file: " + e.getMessage());
+        }
+    }
+           // TODO add your handling code here:
+    }//GEN-LAST:event_btnRemoveActionPerformed
 
     /**
      * @param args the command line arguments
@@ -834,6 +943,8 @@ public class calculatorForm extends javax.swing.JFrame {
     private javax.swing.JButton btnNumber9;
     private javax.swing.JButton btnPhanTram;
     private javax.swing.JButton btnPow;
+    private javax.swing.JButton btnRemove;
+    private javax.swing.JButton btnSearch;
     private javax.swing.JButton btnSqrt;
     private javax.swing.JButton btnTru;
     private javax.swing.JButton btnnghichDao;
@@ -847,5 +958,6 @@ public class calculatorForm extends javax.swing.JFrame {
     private javax.swing.JPanel mainPanel;
     private javax.swing.JPanel memoryPanel;
     private javax.swing.JTextField txtDisplay;
+    private javax.swing.JTextField txtSearch;
     // End of variables declaration//GEN-END:variables
 }
