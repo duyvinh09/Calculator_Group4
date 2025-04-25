@@ -7,6 +7,9 @@ package calculator;
 import java.awt.CardLayout;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
+import java.awt.Toolkit;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.StringSelection;
 
 /**
  *
@@ -18,12 +21,29 @@ public class calculatorForm extends javax.swing.JFrame {
 
     public calculatorForm() {
         initComponents();
+       
+        
         cardLayout = (CardLayout) historyMemoryForm.getLayout();
         listMemory.setModel(listModel);
         setLocationRelativeTo(null); // Đưa app sau khi chạy vào giữa màn hình
         setResizable(false); // chặn đổi size app
-    }
+        btnCopy = new javax.swing.JButton();
+        btnCopy.setToolTipText("Copy");
+        btnCopy.setText(""); // Ẩn chữ nếu chỉ muốn icon
 
+        btnCopy.setIcon(new javax.swing.ImageIcon(getClass().getResource("E:/123/Calculator_Group4/icon")));
+
+        btnCopy.addActionListener(new java.awt.event.ActionListener() {
+    public void actionPerformed(java.awt.event.ActionEvent evt) {
+        String resultText = txtDisplay.getText();
+        StringSelection stringSelection = new StringSelection(resultText);
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        clipboard.setContents(stringSelection, null);
+    }
+    });
+    
+getContentPane().add(btnCopy);
+btnCopy.setBounds(320, 20, 70, 30); }
     private ArrayList<String> history = new ArrayList<>(); // Lưu danh sách phép tính
     private DefaultListModel<String> listModel = new DefaultListModel<>(); // Model cho JList
     private double num1 = 0, num2 = 0;// Tạo hai biến num1, num 2 để luu giá trị nhập vào
@@ -1124,5 +1144,6 @@ public class calculatorForm extends javax.swing.JFrame {
     private javax.swing.JPanel mainPanel;
     private javax.swing.JPanel memoryPanel;
     private javax.swing.JTextField txtDisplay;
+    private javax.swing.JButton btnCopy;
     // End of variables declaration//GEN-END:variables
 }
