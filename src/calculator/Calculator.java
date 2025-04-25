@@ -1,20 +1,28 @@
 package calculator;
 
 import java.awt.*;
-import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.Clipboard;
-
-import net.objecthunter.exp4j.Expression;
-import net.objecthunter.exp4j.ExpressionBuilder;
+import java.awt.datatransfer.StringSelection;
+import javax.script.ScriptException;
 
 public class Calculator {
 
-    // Hàm tính toán biểu thức
+    // Hàm chính để tính biểu thức, xử lý cả √
     public static double evaluate(String expr) {
-        expr = expr.replaceAll("√", "sqrt");
-        Expression expression = new ExpressionBuilder(expr)
-                .build();
-        return expression.evaluate();
+        // Xử lý căn bậc hai √x -> Math.sqrt(x)
+        expr = expr.replaceAll("√\\s*\\(", "Math.sqrt(");
+        expr = expr.replaceAll("√\\s*(\\d+(\\.\\d+)?)", "Math.sqrt($1)");
+
+        try {
+            // Dùng JavaScript engine để tính biểu thức (Java core, không cần thư viện ngoài)
+            javax.script.ScriptEngineManager mgr = new javax.script.ScriptEngineManager();
+            javax.script.ScriptEngine engine = mgr.getEngineByName("JavaScript");
+            Object result = engine.eval(expr);
+            return Double.parseDouble(result.toString());
+        } catch (NumberFormatException | ScriptException e) {
+            System.out.println("Lỗi biểu thức: " + e.getMessage());
+            return Double.NaN;
+        }
     }
 
     // Hàm copy kết quả vào clipboard
@@ -24,17 +32,14 @@ public class Calculator {
         clipboard.setContents(selection, null);
     }
 
-    // Hàm main test (tùy bạn giữ hay bỏ)
+    // Test
     public static void main(String[] args) {
-        calculatorForm a = new calculatorForm();
-        a.setVisible(true);
-
-        // Test biểu thức
         String expr = "5 + (3 * 2) - √9";
         double result = evaluate(expr);
         System.out.println("Kết quả: " + result);
 
-        // Copy vào clipboard
         copyToClipboard(String.valueOf(result));
+        System.out.println("Kết quả đã được copy vào clipboard.");
     }
 }
+
