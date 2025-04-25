@@ -23,33 +23,32 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
+          <Group type="102" alignment="0" attributes="0">
               <Component id="mainPanel" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-              <Component id="historyMemoryForm" max="32767" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-          </Group>
-          <Group type="102" alignment="1" attributes="0">
-              <EmptySpace max="32767" attributes="0"/>
-              <Component id="jLabel1" min="-2" pref="124" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="105" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="historyMemoryForm" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="jLabel1" min="-2" pref="124" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="72" max="-2" attributes="0"/>
+                  </Group>
+              </Group>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
+          <Component id="mainPanel" alignment="1" max="32767" attributes="0"/>
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+              <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
               <Component id="jLabel1" min="-2" pref="35" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Component id="historyMemoryForm" max="32767" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                  </Group>
-                  <Component id="mainPanel" max="32767" attributes="0"/>
-              </Group>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="historyMemoryForm" max="32767" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -62,10 +61,7 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="calculatorForm" alignment="0" max="32767" attributes="0"/>
-                      <Component id="txtDisplay" alignment="1" max="32767" attributes="0"/>
-                  </Group>
+                  <Component id="calculatorForm" max="32767" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -73,9 +69,8 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
-                  <Component id="txtDisplay" min="-2" pref="83" max="-2" attributes="0"/>
-                  <EmptySpace max="-2" attributes="0"/>
-                  <Component id="calculatorForm" max="32767" attributes="0"/>
+                  <EmptySpace max="32767" attributes="0"/>
+                  <Component id="calculatorForm" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -88,46 +83,35 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Component id="btnDoiDau" min="-2" pref="65" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="btnNumber0" min="-2" pref="65" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="btnDot" min="-2" pref="65" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="btnBang" max="32767" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="1" attributes="0">
-                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <Component id="btnChuyenDoi" max="32767" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="btnGiaithua" min="-2" pref="65" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" attributes="0">
-                                      <Component id="btnPhanTram" min="-2" pref="65" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="btnCE" min="-2" pref="65" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="btnC" min="-2" pref="65" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
+                          <Group type="102" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" attributes="0">
-                                      <Component id="btnLnx" min="-2" pref="65" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="btnLog10" min="-2" pref="65" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="btnNumber1" min="-2" pref="65" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="btnNumber2" min="-2" pref="65" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="btnNumber3" min="-2" pref="65" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="btnCong" min="-2" pref="65" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="btnDoiDau" min="-2" pref="65" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="btnNumber0" min="-2" pref="65" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="btnDot" min="-2" pref="65" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="btnBang" min="-2" pref="65" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
                                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                   </Group>
-                                  <Component id="btnDelete" max="32767" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" attributes="0">
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Group type="102" alignment="1" attributes="0">
                                               <Component id="btnnghichDao" min="-2" pref="65" max="-2" attributes="0"/>
@@ -139,6 +123,15 @@
                                               <Component id="btnChia" min="-2" pref="65" max="-2" attributes="0"/>
                                           </Group>
                                           <Group type="102" alignment="1" attributes="0">
+                                              <Component id="btnNumber7" min="-2" pref="65" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="btnNumber8" min="-2" pref="65" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="btnNumber9" min="-2" pref="65" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="btnNhan" min="-2" pref="65" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" alignment="1" attributes="0">
                                               <Component id="btnNumber4" min="-2" pref="65" max="-2" attributes="0"/>
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Component id="btnNumber5" min="-2" pref="65" max="-2" attributes="0"/>
@@ -147,38 +140,29 @@
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Component id="btnTru" min="-2" pref="65" max="-2" attributes="0"/>
                                           </Group>
+                                          <Group type="102" alignment="1" attributes="0">
+                                              <Component id="btnPhanTram" min="-2" pref="65" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Group type="102" alignment="1" attributes="0">
+                                                      <Component id="btnForward" min="-2" max="-2" attributes="0"/>
+                                                      <EmptySpace max="-2" attributes="0"/>
+                                                      <Component id="btnBackspace" min="-2" max="-2" attributes="0"/>
+                                                  </Group>
+                                                  <Group type="102" alignment="1" attributes="0">
+                                                      <Component id="btnCE" min="-2" pref="65" max="-2" attributes="0"/>
+                                                      <EmptySpace max="-2" attributes="0"/>
+                                                      <Component id="btnC" min="-2" pref="65" max="-2" attributes="0"/>
+                                                      <EmptySpace max="-2" attributes="0"/>
+                                                      <Component id="btnDelete" min="-2" pref="65" max="-2" attributes="0"/>
+                                                  </Group>
+                                              </Group>
+                                          </Group>
                                       </Group>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="btnSin" min="-2" pref="65" max="-2" attributes="0"/>
-                                          <Component id="btntan" alignment="0" min="-2" pref="65" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="btnNumber1" min="-2" pref="65" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="btnNumber2" min="-2" pref="65" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="btnNumber3" min="-2" pref="65" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="btnCong" min="-2" pref="65" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" max="-2" attributes="0"/>
-                                      <Component id="btnCot" min="-2" pref="65" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="btnNumber7" min="-2" pref="65" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="btnNumber8" min="-2" pref="65" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="btnNumber9" min="-2" pref="65" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="btnNhan" min="-2" pref="65" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="btnCos" min="-2" pref="65" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
-                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
+                          <Component id="txtDisplay" alignment="0" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -187,86 +171,59 @@
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="btnGiaithua" alignment="1" min="-2" pref="40" max="-2" attributes="0"/>
-                          <Component id="btnDelete" alignment="1" min="-2" pref="40" max="-2" attributes="0"/>
-                          <Component id="btnChuyenDoi" alignment="1" min="-2" pref="40" max="-2" attributes="0"/>
-                      </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="txtDisplay" min="-2" pref="83" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="1" attributes="0">
-                              <Component id="btnLog10" min="-2" pref="40" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="1" attributes="0">
-                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                  <Component id="btnLnx" max="32767" attributes="0"/>
-                                  <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="btnC" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                                      <Component id="btnCE" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                                      <Component id="btnPhanTram" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
-                              <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-                          </Group>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="btnBackspace" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
+                          <Component id="btnForward" alignment="3" min="-2" pref="29" max="-2" attributes="0"/>
                       </Group>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                              <Component id="btnPhanTram" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                              <Component id="btnCE" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                              <Component id="btnC" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="btnDelete" alignment="1" min="-2" pref="40" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                               <Component id="btnnghichDao" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                               <Component id="btnPow" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                               <Component id="btnSqrt" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                           </Group>
-                          <Group type="103" alignment="1" groupAlignment="3" attributes="0">
-                              <Component id="btnChia" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                              <Component id="btnSin" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="btnChia" alignment="1" min="-2" pref="40" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                              <Component id="btnNhan" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                              <Component id="btnCos" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="btnNhan" alignment="0" min="-2" pref="40" max="-2" attributes="0"/>
                           <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                               <Component id="btnNumber7" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                               <Component id="btnNumber8" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                               <Component id="btnNumber9" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                                  <Component id="btnNumber4" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                                  <Component id="btnNumber5" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                                  <Component id="btnNumber6" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                              </Group>
-                              <Component id="btnTru" alignment="1" min="-2" pref="40" max="-2" attributes="0"/>
+                          <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                              <Component id="btnNumber4" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                              <Component id="btnNumber5" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                              <Component id="btnNumber6" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="btntan" alignment="1" min="-2" pref="40" max="-2" attributes="0"/>
+                          <Component id="btnTru" alignment="1" min="-2" pref="40" max="-2" attributes="0"/>
                       </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="btnNumber2" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                                      <Component id="btnNumber1" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Component id="btnNumber3" alignment="0" min="-2" pref="40" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
-                              <Component id="btnCong" min="-2" pref="40" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="btnCot" min="-2" pref="40" max="-2" attributes="0"/>
+                          <Component id="btnCong" min="-2" pref="40" max="-2" attributes="0"/>
+                          <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                              <Component id="btnNumber2" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                              <Component id="btnNumber1" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
+                              <Component id="btnNumber3" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                               <Component id="btnDoiDau" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
@@ -277,7 +234,7 @@
                               <Component id="btnBang" alignment="3" min="-2" pref="40" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -556,113 +513,47 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="btnSin">
+            <Component class="javax.swing.JTextField" name="txtDisplay">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Segoe UI" size="18" style="1"/>
+                  <Font name="Segoe UI" size="18" style="0"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="sin"/>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                    <TitledBorder title="CALCULATOR">
+                      <Font PropertyName="font" name="Segoe UI" size="12" style="1"/>
+                    </TitledBorder>
+                  </Border>
+                </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnSinActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtDisplayActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="btntan">
+            <Component class="javax.swing.JButton" name="btnBackspace">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Segoe UI" size="18" style="1"/>
+                  <Font name="Segoe UI" size="14" style="1"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="tan"/>
+                <Property name="text" type="java.lang.String" value="Backspace"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btntanActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBackspaceActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="btnCot">
+            <Component class="javax.swing.JButton" name="btnForward">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Segoe UI" size="18" style="1"/>
+                  <Font name="Segoe UI" size="14" style="1"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="cot"/>
+                <Property name="text" type="java.lang.String" value="Forward"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCotActionPerformed"/>
-              </Events>
-            </Component>
-            <Component class="javax.swing.JButton" name="btnCos">
-              <Properties>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Segoe UI" size="18" style="1"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="cos"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCosActionPerformed"/>
-              </Events>
-            </Component>
-            <Component class="javax.swing.JButton" name="btnGiaithua">
-              <Properties>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Segoe UI" size="18" style="1"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="n!"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGiaithuaActionPerformed"/>
-              </Events>
-            </Component>
-            <Component class="javax.swing.JButton" name="btnChuyenDoi">
-              <Properties>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Segoe UI" size="18" style="1"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="&#xb0;/rad"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnChuyenDoiActionPerformed"/>
-              </Events>
-            </Component>
-            <Component class="javax.swing.JButton" name="btnLog10">
-              <Properties>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Segoe UI" size="10" style="1"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="log&#x2081;&#x2080;x"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLog10ActionPerformed"/>
-              </Events>
-            </Component>
-            <Component class="javax.swing.JButton" name="btnLnx">
-              <Properties>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Segoe UI" size="18" style="1"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="ln x"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnLnxActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnForwardActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>
         </Container>
-        <Component class="javax.swing.JTextField" name="txtDisplay">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI" size="18" style="0"/>
-            </Property>
-            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-              <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                <TitledBorder title="CALCULATOR">
-                  <Font PropertyName="font" name="Segoe UI" size="12" style="1"/>
-                </TitledBorder>
-              </Border>
-            </Property>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtDisplayActionPerformed"/>
-          </Events>
-        </Component>
       </SubComponents>
     </Container>
     <Container class="javax.swing.JPanel" name="historyMemoryForm">
@@ -681,14 +572,17 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" min="-2" pref="307" max="-2" attributes="0"/>
-                      <EmptySpace max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" pref="251" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jScrollPane1" alignment="0" pref="506" max="32767" attributes="0"/>
+                  <Group type="102" alignment="1" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="jScrollPane1" pref="429" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                  </Group>
               </Group>
             </DimensionLayout>
           </Layout>
@@ -732,12 +626,12 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jTextField3" alignment="0" pref="319" max="32767" attributes="0"/>
+                  <Component id="jTextField3" alignment="0" pref="257" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jTextField3" alignment="0" pref="506" max="32767" attributes="0"/>
+                  <Component id="jTextField3" alignment="0" pref="441" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
           </Layout>
