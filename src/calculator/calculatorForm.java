@@ -88,6 +88,7 @@ public class calculatorForm extends javax.swing.JFrame {
         txtSearch = new javax.swing.JTextField();
         btnSearch = new javax.swing.JButton();
         btnRemove = new javax.swing.JButton();
+        btnDeleteSelected = new javax.swing.JButton();
         memoryPanel = new javax.swing.JPanel();
         jTextField3 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
@@ -453,6 +454,14 @@ public class calculatorForm extends javax.swing.JFrame {
             }
         });
 
+        btnDeleteSelected.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        btnDeleteSelected.setText("Delete");
+        btnDeleteSelected.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteSelectedActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout historyPanelLayout = new javax.swing.GroupLayout(historyPanel);
         historyPanel.setLayout(historyPanelLayout);
         historyPanelLayout.setHorizontalGroup(
@@ -460,17 +469,20 @@ public class calculatorForm extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, historyPanelLayout.createSequentialGroup()
                 .addGroup(historyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(historyPanelLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE))
-                    .addGroup(historyPanelLayout.createSequentialGroup()
                         .addComponent(btnSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtSearch)))
+                        .addComponent(txtSearch))
+                    .addGroup(historyPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(historyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(historyPanelLayout.createSequentialGroup()
+                                .addGap(6, 6, 6)
+                                .addComponent(btnDeleteSelected)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnRemove)
+                                .addGap(9, 9, 9))
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE))))
                 .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, historyPanelLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(btnRemove)
-                .addGap(15, 15, 15))
         );
         historyPanelLayout.setVerticalGroup(
             historyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -482,7 +494,9 @@ public class calculatorForm extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 357, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnRemove))
+                .addGroup(historyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnRemove)
+                    .addComponent(btnDeleteSelected)))
         );
 
         historyMemoryForm.add(historyPanel, "card2");
@@ -842,10 +856,26 @@ public class calculatorForm extends javax.swing.JFrame {
             // Chỉ lấy phần biểu thức trước dấu "=" (bỏ kết quả)
             // Sau đó bỏ khoảng trắng và chuyển về chữ thường để so sánh
             String expressionOnly = entry.split("=")[0].replaceAll("\\s+", "").toLowerCase();
-
+            String resultOnly = "";
+            if (entry.contains("=")) {
+                resultOnly = entry.split("=")[1].replaceAll("\\s+", "").toLowerCase();
+            }
             // Nếu biểu thức chứa từ khóa tìm kiếm thì thêm vào danh sách lọc
+            // Nếu biểu thức chứa từ khóa -> ok
             if (expressionOnly.contains(keyword)) {
-            filteredModel.addElement(entry); // thêm dòng gốc vào model mới
+                filteredModel.addElement(entry);
+            } else {
+                // Nếu kết quả đúng chính xác thì mới cho vào
+                try {
+                    double searchResult = Double.parseDouble(keyword);
+                    double actualResult = Double.parseDouble(resultOnly);
+
+                    if (searchResult == actualResult) {
+                        filteredModel.addElement(entry);
+                    }
+                } catch (NumberFormatException e) {
+                // Nếu không parse được số thì bỏ qua kết quả
+                }
             }
         }   
 
@@ -855,19 +885,57 @@ public class calculatorForm extends javax.swing.JFrame {
 
     private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
         int confirm = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete all history?", "Confirm", JOptionPane.YES_NO_OPTION);
-    if (confirm == JOptionPane.YES_OPTION) {
-        listModel.clear();
-        listMemory.setModel(listModel);
+        if (confirm == JOptionPane.YES_OPTION) {
+            listModel.clear();
+            listMemory.setModel(listModel);
 
-        // Ghi đè file rỗng
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter("history.txt"))) {
-            writer.write("");
-        } catch (IOException e) {
-            System.out.println("Lỗi khi xóa file: " + e.getMessage());
+            // Ghi đè file rỗng
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter("history.txt"))) {
+                writer.write("");
+            } catch (IOException e) {
+                System.out.println("Lỗi khi xóa file: " + e.getMessage());
+            }
         }
-    }
            // TODO add your handling code here:
     }//GEN-LAST:event_btnRemoveActionPerformed
+    
+    /**
+ * Ghi toàn bộ lịch sử phép tính hiện tại trong listModel vào file "history.txt".
+ * File sẽ được ghi đè hoàn toàn (không thêm vào cuối).
+ * 
+ * Cách làm:
+ * - Duyệt từng phần tử (phép tính) trong listModel.
+ * - Ghi từng phép tính vào file, mỗi phép tính trên 1 dòng.
+ * 
+ * Nếu xảy ra lỗi IO (ví dụ lỗi quyền ghi file) thì sẽ in lỗi ra console.
+ */
+    private void saveHistoryToFile() {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("history.txt"))) {
+            // Duyệt qua toàn bộ các phép tính trong listModel
+            for (int i = 0; i < listModel.size(); i++) {
+                writer.write(listModel.get(i)); // Ghi phép tính vào file
+                writer.newLine(); // Xuống dòng sau mỗi phép tính
+            }
+        } catch (IOException e) {
+            // Nếu lỗi khi ghi file, in lỗi ra màn hình console
+            System.out.println("Lỗi khi ghi file: " + e.getMessage());
+        }
+    }
+    
+    private void btnDeleteSelectedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteSelectedActionPerformed
+         int selectedIndex = listMemory.getSelectedIndex();
+         if (selectedIndex != -1) {
+            // Nếu có chọn phép tính nào
+            int confirm = JOptionPane.showConfirmDialog(this, "Do you want to delete the selected history?", "Confirm", JOptionPane.YES_NO_OPTION);
+            if (confirm == JOptionPane.YES_OPTION) {
+                listModel.remove(selectedIndex);
+                saveHistoryToFile();
+            }
+        } else {
+            // Nếu chưa chọn phép tính nào thì chỉ báo lỗi thôi
+            JOptionPane.showMessageDialog(this, "Please select a history item to delete.", "Warning", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_btnDeleteSelectedActionPerformed
 
     /**
      * @param args the command line arguments
@@ -928,6 +996,7 @@ public class calculatorForm extends javax.swing.JFrame {
     private javax.swing.JButton btnChia;
     private javax.swing.JButton btnCong;
     private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnDeleteSelected;
     private javax.swing.JButton btnDoiDau;
     private javax.swing.JButton btnDot;
     private javax.swing.JButton btnNhan;
