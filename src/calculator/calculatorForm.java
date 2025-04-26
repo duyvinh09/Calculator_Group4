@@ -54,10 +54,15 @@ public class calculatorForm extends javax.swing.JFrame {
         darkIcon = new ImageIcon(getClass().getResource("/calculator/moon.png")); // Icon mặt trăng cho dark mode
         lightIcon = new ImageIcon(getClass().getResource("/calculator/sun.png")); // Icon mặt trời cho light mode
         applyLightMode(); // Áp dụng light mode mặc định khi khởi động
+        btnCopy.setVisible(false); // Vô hiệu hóa nút Copy khi khởi tạo
         
         txtDisplay.addKeyListener(new java.awt.event.KeyAdapter() {
             @Override
             public void keyTyped(java.awt.event.KeyEvent e) {
+                if (isErrorState) {
+                    e.consume(); // Chặn mọi ký tự khi ở trạng thái lỗi
+                    return;
+                }
                 char c = e.getKeyChar();
 
                 // Chỉ xử lý các ký tự số, toán tử, và ký tự đặc biệt
@@ -125,6 +130,7 @@ public class calculatorForm extends javax.swing.JFrame {
     private String saveHistory = "";// Để luu toàn bộ phép tính
     private String firstOperand = ""; // Lưu số đầu tiên dưới dạng chuỗi
     private boolean historySaved = false; // Cờ để kiểm tra xem lịch sử đã được lưu chưa
+    private boolean isErrorState = false; // Biến trạng thái lỗi
     
     // Phương thức áp dụng Dark Mode
     private void applyDarkMode() {
@@ -203,7 +209,7 @@ public class calculatorForm extends javax.swing.JFrame {
             btnCong, btnTru, btnNumber4, btnNumber5, btnNumber6, btnNumber7, btnNumber9,
             btnNumber8, btnNhan, btnnghichDao, btnPow, btnChia, btnSqrt, btnPhanTram,
             btnDelete, btnCE, btnC, btnForward, btnBackspace, btnChuyenDoi, btnGiaithua,
-            btnLnx, btnLog10, btnSin, btnCos, btnTan, btnCot, btnRemove, btnSearch
+            btnLnx, btnLog10, btnSin, btnCos, btnTan, btnCot, btnRemove, btnSearch, btnCopy
         };
         
         for (javax.swing.JButton button : buttons) {
@@ -224,7 +230,7 @@ public class calculatorForm extends javax.swing.JFrame {
             btnCong, btnTru, btnNumber4, btnNumber5, btnNumber6, btnNumber7, btnNumber9,
             btnNumber8, btnNhan, btnnghichDao, btnPow, btnChia, btnSqrt, btnPhanTram,
             btnDelete, btnCE, btnC, btnForward, btnBackspace, btnChuyenDoi, btnGiaithua,
-            btnLnx, btnLog10, btnSin, btnCos, btnTan, btnCot, btnRemove, btnSearch
+            btnLnx, btnLog10, btnSin, btnCos, btnTan, btnCot, btnRemove, btnSearch, btnCopy
         };
         for (javax.swing.JButton button : buttons) {
             button.setFont(font);
@@ -282,6 +288,9 @@ public class calculatorForm extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jMenuBar2 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenu2 = new javax.swing.JMenu();
         mainPanel = new javax.swing.JPanel();
         calculatorForm = new javax.swing.JPanel();
         btnNumber0 = new javax.swing.JButton();
@@ -320,6 +329,7 @@ public class calculatorForm extends javax.swing.JFrame {
         btnCos = new javax.swing.JButton();
         btnTan = new javax.swing.JButton();
         btnCot = new javax.swing.JButton();
+        btnCopy = new javax.swing.JButton();
         historyMemoryForm = new javax.swing.JPanel();
         memoryPanel = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -334,6 +344,12 @@ public class calculatorForm extends javax.swing.JFrame {
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
+
+        jMenu1.setText(null);
+        jMenuBar2.add(jMenu1);
+
+        jMenu2.setText(null);
+        jMenuBar2.add(jMenu2);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -627,6 +643,13 @@ public class calculatorForm extends javax.swing.JFrame {
             }
         });
 
+        btnCopy.setIcon(new javax.swing.ImageIcon(getClass().getResource("/calculator/copy.png"))); // NOI18N
+        btnCopy.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCopyActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout calculatorFormLayout = new javax.swing.GroupLayout(calculatorForm);
         calculatorForm.setLayout(calculatorFormLayout);
         calculatorFormLayout.setHorizontalGroup(
@@ -689,6 +712,12 @@ public class calculatorForm extends javax.swing.JFrame {
                                     .addComponent(btnTru, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, calculatorFormLayout.createSequentialGroup()
+                        .addComponent(btnCopy)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnForward)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnBackspace))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, calculatorFormLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(calculatorFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, calculatorFormLayout.createSequentialGroup()
@@ -699,10 +728,6 @@ public class calculatorForm extends javax.swing.JFrame {
                                 .addComponent(btnC, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, calculatorFormLayout.createSequentialGroup()
-                                .addComponent(btnForward)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnBackspace))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, calculatorFormLayout.createSequentialGroup()
                                 .addComponent(btnDoiDau, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -722,7 +747,8 @@ public class calculatorForm extends javax.swing.JFrame {
                 .addGap(4, 4, 4)
                 .addGroup(calculatorFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnBackspace)
-                    .addComponent(btnForward))
+                    .addComponent(btnForward)
+                    .addComponent(btnCopy))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(calculatorFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(calculatorFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -931,10 +957,12 @@ public class calculatorForm extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+    
     // Hàm định dạng số nguyên
     private String formatNumber(double num){
         return (num == Math.floor(num)) ? String.valueOf((int) num) : String.valueOf(num);
     }
+    
     //Hàm lưu lịch sử vào file txt
     private void writeHistoryToFile(String history) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter("history.txt", true))) {
@@ -979,8 +1007,12 @@ public class calculatorForm extends javax.swing.JFrame {
             historySaved = false; // Đặt lại để cho phép lưu lịch sử mới
         } catch (NumberFormatException e) {
             txtDisplay.setText("Lỗi");
+            isErrorState = true;
+            btnCopy.setVisible(false);
         } catch (ArithmeticException e) {
             txtDisplay.setText(e.getMessage());
+            isErrorState = true;
+            btnCopy.setVisible(false);
         }
     }
     
@@ -990,6 +1022,7 @@ public class calculatorForm extends javax.swing.JFrame {
     }//GEN-LAST:event_txtDisplayActionPerformed
 
     private void btnPhanTramActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPhanTramActionPerformed
+        if (isErrorState) return;
         try {
             double num = Double.parseDouble(txtDisplay.getText()); // Lấy số hiện tại
             result = num / 100; // Chia cho 100
@@ -999,16 +1032,22 @@ public class calculatorForm extends javax.swing.JFrame {
             listModel.addElement(saveHistory);
             // Đánh dấu lịch sử đã được lưu
             historySaved = true;
+            btnCopy.setVisible(true);
         } catch (NumberFormatException e) {
             txtDisplay.setText("Lỗi"); // Nếu nhập không hợp lệ
+            isErrorState = true;
+            btnCopy.setVisible(false);
         }
     }//GEN-LAST:event_btnPhanTramActionPerformed
 
     private void btnnghichDaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnnghichDaoActionPerformed
+        if (isErrorState) return;
         try {
             double num = Double.parseDouble(txtDisplay.getText()); // Lấy số hiện tại
             if (num == 0) {
                 txtDisplay.setText("Lỗi"); // Tránh chia cho 0
+                isErrorState = true;
+                btnCopy.setVisible(false);
             } else {
                 result = 1 / num; // Tính nghịch đảo
                 // Lưu lịch sử với định dạng "1/x = kết quả" ngay khi nhấn nút nghịch đảo
@@ -1017,13 +1056,17 @@ public class calculatorForm extends javax.swing.JFrame {
                 listModel.addElement(saveHistory);
                 // Đánh dấu lịch sử đã được lưu
                 historySaved = true;
+                btnCopy.setVisible(true);
             }
         } catch (NumberFormatException e) {
             txtDisplay.setText("Lỗi"); // Nếu nhập không hợp lệ
+            isErrorState = true;
+            btnCopy.setVisible(false);
         }
     }//GEN-LAST:event_btnnghichDaoActionPerformed
 
     private void btnNumber7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNumber7ActionPerformed
+        if (isErrorState) return; // Không cho phép nhập khi ở trạng thái lỗi
         if (newInput) {
             txtDisplay.setText("7");
             newInput = false;
@@ -1033,6 +1076,7 @@ public class calculatorForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNumber7ActionPerformed
 
     private void btnNumber4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNumber4ActionPerformed
+        if (isErrorState) return; // Không cho phép nhập khi ở trạng thái lỗi
         if (newInput) {
             txtDisplay.setText("4");
             newInput = false;
@@ -1042,6 +1086,7 @@ public class calculatorForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNumber4ActionPerformed
 
     private void btnNumber1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNumber1ActionPerformed
+        if (isErrorState) return; // Không cho phép nhập khi ở trạng thái lỗi
         if (newInput) {
             txtDisplay.setText("1");
             newInput = false;
@@ -1051,6 +1096,7 @@ public class calculatorForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNumber1ActionPerformed
 
     private void btnDoiDauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDoiDauActionPerformed
+        if (isErrorState) return;
         try {
             double num = Double.parseDouble(txtDisplay.getText()); // Lấy số hiện tại
             num = -num; // Đổi dấu
@@ -1062,10 +1108,13 @@ public class calculatorForm extends javax.swing.JFrame {
             }
         } catch (NumberFormatException e) {
             txtDisplay.setText("Lỗi"); // Nếu nhập không hợp lệ
+            isErrorState = true;
+            btnCopy.setVisible(false);
         }
     }//GEN-LAST:event_btnDoiDauActionPerformed
 
     private void btnNumber2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNumber2ActionPerformed
+        if (isErrorState) return; // Không cho phép nhập khi ở trạng thái lỗi
         if (newInput) {
             txtDisplay.setText("2");
             newInput = false;
@@ -1075,6 +1124,7 @@ public class calculatorForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNumber2ActionPerformed
 
     private void btnNumber3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNumber3ActionPerformed
+        if (isErrorState) return; // Không cho phép nhập khi ở trạng thái lỗi
         if (newInput) {
             txtDisplay.setText("3");
             newInput = false;
@@ -1084,6 +1134,7 @@ public class calculatorForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNumber3ActionPerformed
 
     private void btnNumber5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNumber5ActionPerformed
+        if (isErrorState) return; // Không cho phép nhập khi ở trạng thái lỗi
         if (newInput) {
             txtDisplay.setText("5");
             newInput = false;
@@ -1093,6 +1144,7 @@ public class calculatorForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNumber5ActionPerformed
 
     private void btnNumber6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNumber6ActionPerformed
+        if (isErrorState) return; // Không cho phép nhập khi ở trạng thái lỗi
         if (newInput) {
             txtDisplay.setText("6");
             newInput = false;
@@ -1102,6 +1154,7 @@ public class calculatorForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNumber6ActionPerformed
 
     private void btnNumber8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNumber8ActionPerformed
+        if (isErrorState) return; // Không cho phép nhập khi ở trạng thái lỗi
         if (newInput) {
             txtDisplay.setText("8");
             newInput = false;
@@ -1111,6 +1164,7 @@ public class calculatorForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNumber8ActionPerformed
 
     private void btnNumber9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNumber9ActionPerformed
+        if (isErrorState) return; // Không cho phép nhập khi ở trạng thái lỗi
         if (newInput) {
             txtDisplay.setText("9");
             newInput = false;
@@ -1120,28 +1174,34 @@ public class calculatorForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNumber9ActionPerformed
 
     private void btnCongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCongActionPerformed
+        if (isErrorState) return; // Không cho phép nhập khi ở trạng thái lỗi
         operatorActionPerformed("+");
     }//GEN-LAST:event_btnCongActionPerformed
 
     private void btnTruActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTruActionPerformed
+        if (isErrorState) return; // Không cho phép nhập khi ở trạng thái lỗi
         operatorActionPerformed("-");
     }//GEN-LAST:event_btnTruActionPerformed
 
     private void btnNhanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNhanActionPerformed
+        if (isErrorState) return; // Không cho phép nhập khi ở trạng thái lỗi
         operatorActionPerformed("x");
     }//GEN-LAST:event_btnNhanActionPerformed
 
     private void btnChiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChiaActionPerformed
+        if (isErrorState) return; // Không cho phép nhập khi ở trạng thái lỗi
         operatorActionPerformed("/");
     }//GEN-LAST:event_btnChiaActionPerformed
 
     private void btnBangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBangActionPerformed
+        if (isErrorState) return; // Không cho phép nhập khi ở trạng thái lỗi
         try {
             String expression = txtDisplay.getText().trim();
             // Nếu là biểu thức đặc biệt (giai thừa)
             if (expression.endsWith("!")) {
                 // Gọi xử lý riêng
                 tinhGiaiThua();
+                btnCopy.setVisible(true);
                 return; // Không xử lý tiếp các phép + - * /
             }
             
@@ -1158,14 +1218,15 @@ public class calculatorForm extends javax.swing.JFrame {
                 txtDisplay.setText(formatNumber(num1));
                 listModel.addElement(saveHistory); // Thêm vào lịch sử
                 historySaved = true;
-                // Ghi lịch sử vào file
-                writeHistoryToFile(saveHistory);
+                writeHistoryToFile(saveHistory); // Ghi lịch sử vào file
+                btnCopy.setVisible(true);
             } else if (!historySaved) {
                 num1 = temp;
                 saveHistory = formatNumber(num1) + " = " + formatNumber(num1);
                 txtDisplay.setText(formatNumber(num1));
                 listModel.addElement(saveHistory);
                 historySaved = true;
+                btnCopy.setVisible(true);
             }
             
             operator = "";
@@ -1173,8 +1234,12 @@ public class calculatorForm extends javax.swing.JFrame {
             newInput = true; // Đánh dấu để nhập số mới
         } catch (NumberFormatException e) {
             txtDisplay.setText("Lỗi");
+            isErrorState = true; // Đặt trạng thái lỗi
+            btnCopy.setVisible(false);
         } catch (ArithmeticException e) {
             txtDisplay.setText(e.getMessage());
+            isErrorState = true; // Đặt trạng thái lỗi
+            btnCopy.setVisible(false);
         }
     }//GEN-LAST:event_btnBangActionPerformed
 
@@ -1187,14 +1252,19 @@ public class calculatorForm extends javax.swing.JFrame {
         num2 = 0;
         operator = "";
         newInput = true;
+        isErrorState = false;
+        btnCopy.setVisible(false);
     }//GEN-LAST:event_btnCActionPerformed
 
     private void btnCEActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCEActionPerformed
         txtDisplay.setText("0");
         newInput = true;
+        isErrorState = false;
+        btnCopy.setVisible(false);
     }//GEN-LAST:event_btnCEActionPerformed
 
     private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        if (isErrorState) return; // Không cho phép nhập khi ở trạng thái lỗi
         String text = txtDisplay.getText();
         if (!text.isEmpty()) {
             txtDisplay.setText(text.substring(0, text.length() - 1));
@@ -1202,6 +1272,7 @@ public class calculatorForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDeleteActionPerformed
 
     private void btnPowActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPowActionPerformed
+        if (isErrorState) return; // Không cho phép nhập khi ở trạng thái lỗi
         try {
             double num = Double.parseDouble(txtDisplay.getText()); // Lấy số hiện tại
             result = num * num; // Bình phương số
@@ -1209,29 +1280,39 @@ public class calculatorForm extends javax.swing.JFrame {
             txtDisplay.setText(formatNumber(result));
             listModel.addElement(saveHistory);
             historySaved = true; // Đánh dấu lịch sử đã được lưu
+            btnCopy.setVisible(true);
         } catch (NumberFormatException e) {
             txtDisplay.setText("Lỗi"); // Nếu nhập không hợp lệ
+            isErrorState = true; // Đặt trạng thái lỗi
+            btnCopy.setVisible(false);
         }
     }//GEN-LAST:event_btnPowActionPerformed
 
     private void btnSqrtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSqrtActionPerformed
+        if (isErrorState) return;
         try {
             double num = Double.parseDouble(txtDisplay.getText()); // Lấy số hiện tại
             if (num < 0) {
                 txtDisplay.setText("Lỗi"); // Không tính căn số âm
+                isErrorState = true;
+                btnCopy.setVisible(false);
             } else {
                 result = Math.sqrt(num); // Tính căn bậc hai
                 saveHistory = "√" + formatNumber(num) + " = " + formatNumber(result);// Hiển thị kết quả
                 txtDisplay.setText(formatNumber(result));
                 listModel.addElement(saveHistory);
                 historySaved = true;// Nếu nhập không hợp lệ
+                btnCopy.setVisible(true);
             }
         } catch (NumberFormatException e) {
             txtDisplay.setText("Lỗi"); // Nếu nhập không hợp lệ
+            isErrorState = true;
+            btnCopy.setVisible(false);
         }
     }//GEN-LAST:event_btnSqrtActionPerformed
 
     private void btnDotActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDotActionPerformed
+        if (isErrorState) return; // Không cho phép nhập khi ở trạng thái lỗi
         String text = txtDisplay.getText();
 
         // Kiểm tra nếu chưa có dấu chấm trong số hiện tại
@@ -1242,6 +1323,7 @@ public class calculatorForm extends javax.swing.JFrame {
 
     private void btnNumber0ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNumber0ActionPerformed
         // TODO add your handling code here:
+        if (isErrorState) return; // Không cho phép nhập khi ở trạng thái lỗi
         if (newInput) {
             txtDisplay.setText("0");
             newInput = false;
@@ -1352,6 +1434,7 @@ public class calculatorForm extends javax.swing.JFrame {
 
     private void btnBackspaceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackspaceActionPerformed
         // TODO add your handling code here:
+        if (isErrorState) return; // Không cho phép nhập khi ở trạng thái lỗi
         String text = txtDisplay.getText();
         int caretPos = txtDisplay.getCaretPosition();
         if (caretPos > 0 && !text.isEmpty()) {
@@ -1364,6 +1447,7 @@ public class calculatorForm extends javax.swing.JFrame {
 
     private void btnForwardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnForwardActionPerformed
         // TODO add your handling code here:
+        if (isErrorState) return; // Không cho phép nhập khi ở trạng thái lỗi
         String text = txtDisplay.getText();
         int caretPos = txtDisplay.getCaretPosition();
         if (caretPos < text.length()) {
@@ -1376,6 +1460,7 @@ public class calculatorForm extends javax.swing.JFrame {
 
     private void btnChuyenDoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChuyenDoiActionPerformed
         // TODO add your handling code here:
+        if (isErrorState) return; // Không cho phép nhập khi ở trạng thái lỗi
         try {
             double val = Double.parseDouble(txtDisplay.getText());
             String result;
@@ -1389,11 +1474,14 @@ public class calculatorForm extends javax.swing.JFrame {
             txtDisplay.setText(result);
         } catch (Exception ex) {
             txtDisplay.setText("Lỗi");
+            isErrorState = true;
+            btnCopy.setVisible(false);
         }
     }//GEN-LAST:event_btnChuyenDoiActionPerformed
 
     private void btnGiaithuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGiaithuaActionPerformed
         // TODO add your handling code here:
+        if (isErrorState) return; // Không cho phép nhập khi ở trạng thái lỗi
         String input = txtDisplay.getText().trim();
         if (!input.isEmpty() && !input.endsWith("!")) {
             txtDisplay.setText(input + "!");
@@ -1410,7 +1498,9 @@ public class calculatorForm extends javax.swing.JFrame {
                 double number = Double.parseDouble(numStr); // Dùng double để kiểm tra số lẻ
                 // Kiểm tra lỗi: số âm hoặc thập phân
                 if (number < 0 || number != Math.floor(number)) {
-                    txtDisplay.setText("Không xác định");            
+                    txtDisplay.setText("Không xác định");
+                    isErrorState = true;
+                    btnCopy.setVisible(false);
                     return;
                 }
                 // Nếu hợp lệ thì tính giai thừa
@@ -1424,15 +1514,20 @@ public class calculatorForm extends javax.swing.JFrame {
             }
         } catch (Exception ex) {
             txtDisplay.setText("Lỗi");
+            isErrorState = true;
+            btnCopy.setVisible(false);
         }
     }
     
     private void btnLnxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLnxActionPerformed
         // TODO add your handling code here:
+        if (isErrorState) return; // Không cho phép nhập khi ở trạng thái lỗi
         try {
             double value = Double.parseDouble(txtDisplay.getText().trim());
             if (value <= 0) {
                 txtDisplay.setText("Không xác định");
+                isErrorState = true;
+                btnCopy.setVisible(false);
                 return;
             }
             double result = Math.log(value);
@@ -1441,15 +1536,20 @@ public class calculatorForm extends javax.swing.JFrame {
             listModel.addElement(expression);
         } catch (NumberFormatException e) {
             txtDisplay.setText("Lỗi nhập!");
+            isErrorState = true;
+            btnCopy.setVisible(false);
         }
     }//GEN-LAST:event_btnLnxActionPerformed
 
     private void btnLog10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLog10ActionPerformed
         // TODO add your handling code here:
+        if (isErrorState) return; // Không cho phép nhập khi ở trạng thái lỗi
         try {
             double value = Double.parseDouble(txtDisplay.getText().trim());
             if (value <= 0) {
                 txtDisplay.setText("Không xác định");
+                isErrorState = true;
+                btnCopy.setVisible(false);
                 return;
             }
             double result = Math.log10(value);
@@ -1458,11 +1558,14 @@ public class calculatorForm extends javax.swing.JFrame {
             listModel.addElement(expression);
         } catch (NumberFormatException e) {
             txtDisplay.setText("Lỗi nhập!");
+            isErrorState = true;
+            btnCopy.setVisible(false);
         }
     }//GEN-LAST:event_btnLog10ActionPerformed
 
     private void btnSinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSinActionPerformed
         // TODO add your handling code here:
+        if (isErrorState) return; // Không cho phép nhập khi ở trạng thái lỗi
         try {
             // Lấy giá trị hiện tại từ txtDisplay
             double angle = Double.parseDouble(txtDisplay.getText().trim());
@@ -1476,11 +1579,14 @@ public class calculatorForm extends javax.swing.JFrame {
             listModel.addElement(expression);
         } catch (NumberFormatException e) {
             txtDisplay.setText("Lỗi nhập!");
+            isErrorState = true;
+            btnCopy.setVisible(false);
         }
     }//GEN-LAST:event_btnSinActionPerformed
 
     private void btnCosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCosActionPerformed
         // TODO add your handling code here:
+        if (isErrorState) return; // Không cho phép nhập khi ở trạng thái lỗi
         try {
             double angle = Double.parseDouble(txtDisplay.getText().trim());
             double result = Math.cos(Math.toRadians(angle));
@@ -1489,17 +1595,22 @@ public class calculatorForm extends javax.swing.JFrame {
             listModel.addElement(expression);
         } catch (NumberFormatException e) {
             txtDisplay.setText("Lỗi nhập!");
+            isErrorState = true;
+            btnCopy.setVisible(false);
         }
     }//GEN-LAST:event_btnCosActionPerformed
 
     private void btnTanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTanActionPerformed
         // TODO add your handling code here:
+        if (isErrorState) return; // Không cho phép nhập khi ở trạng thái lỗi
         try {
             double angle = Double.parseDouble(txtDisplay.getText().trim());
             // Kiểm tra nếu cos(angle) gần 0 → lỗi
             double cosValue = Math.cos(Math.toRadians(angle));
             if (Math.abs(cosValue) < 1e-10) {
                 txtDisplay.setText("Không xác định");
+                isErrorState = true;
+                btnCopy.setVisible(false);
                 return;
             }
             double result = Math.tan(Math.toRadians(angle));
@@ -1508,11 +1619,14 @@ public class calculatorForm extends javax.swing.JFrame {
             listModel.addElement(expression);
         } catch (NumberFormatException e) {
             txtDisplay.setText("Lỗi nhập!");
+            isErrorState = true;
+            btnCopy.setVisible(false);
         }
     }//GEN-LAST:event_btnTanActionPerformed
 
     private void btnCotActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCotActionPerformed
         // TODO add your handling code here:
+        if (isErrorState) return; // Không cho phép nhập khi ở trạng thái lỗi
         try {
             double angle = Double.parseDouble(txtDisplay.getText().trim());
             double result = 1.0 / Math.tan(Math.toRadians(angle));
@@ -1521,8 +1635,30 @@ public class calculatorForm extends javax.swing.JFrame {
             listModel.addElement(expression);
         } catch (ArithmeticException | NumberFormatException e) {
             txtDisplay.setText("Lỗi!");
+            isErrorState = true;
+            btnCopy.setVisible(false);
         }
     }//GEN-LAST:event_btnCotActionPerformed
+
+    private void btnCopyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCopyActionPerformed
+        // TODO add your handling code here:
+        try {
+            // Lấy nội dung từ txtDisplay
+            String result = txtDisplay.getText().trim();
+            if (!result.isEmpty() && !result.equals("Lỗi") && !result.equals("Không xác định")) {
+                // Sao chép vào clipboard
+                java.awt.datatransfer.StringSelection stringSelection = new java.awt.datatransfer.StringSelection(result);
+                java.awt.datatransfer.Clipboard clipboard = java.awt.Toolkit.getDefaultToolkit().getSystemClipboard();
+                clipboard.setContents(stringSelection, null);
+                // Hiển thị thông báo (tùy chọn)
+                JOptionPane.showMessageDialog(this, "Đã sao chép: " + result + " vào clipboard", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                // Vô hiệu hóa nút Copy sau khi sao chép
+                btnCopy.setVisible(false);
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Lỗi khi sao chép!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+    }//GEN-LAST:event_btnCopyActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1568,6 +1704,7 @@ public class calculatorForm extends javax.swing.JFrame {
     private javax.swing.JButton btnChia;
     private javax.swing.JButton btnChuyenDoi;
     private javax.swing.JButton btnCong;
+    private javax.swing.JButton btnCopy;
     private javax.swing.JButton btnCos;
     private javax.swing.JButton btnCot;
     private javax.swing.JButton btnDelete;
@@ -1602,7 +1739,10 @@ public class calculatorForm extends javax.swing.JFrame {
     private javax.swing.JPanel historyMemoryForm;
     private javax.swing.JPanel historyPanel;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
