@@ -88,7 +88,7 @@ btnCopy.setBounds(320, 20, 70, 30); }
         btnCE = new javax.swing.JButton();
         btnC = new javax.swing.JButton();
         btnSin = new javax.swing.JButton();
-        btntan = new javax.swing.JButton();
+        btnTan = new javax.swing.JButton();
         btnCot = new javax.swing.JButton();
         btnCos = new javax.swing.JButton();
         btnGiaithua = new javax.swing.JButton();
@@ -309,11 +309,11 @@ btnCopy.setBounds(320, 20, 70, 30); }
             }
         });
 
-        btntan.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        btntan.setText("tan");
-        btntan.addActionListener(new java.awt.event.ActionListener() {
+        btnTan.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnTan.setText("tan");
+        btnTan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btntanActionPerformed(evt);
+                btnTanActionPerformed(evt);
             }
         });
 
@@ -423,7 +423,7 @@ btnCopy.setBounds(320, 20, 70, 30); }
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(calculatorFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(btnSin, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(btntan, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(btnTan, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(calculatorFormLayout.createSequentialGroup()
                                 .addComponent(btnNumber1, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -493,7 +493,7 @@ btnCopy.setBounds(320, 20, 70, 30); }
                             .addComponent(btnNumber5, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnNumber6, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addComponent(btnTru, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btntan, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnTan, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(calculatorFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(calculatorFormLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -952,7 +952,7 @@ btnCopy.setBounds(320, 20, 70, 30); }
         }
     }//GEN-LAST:event_btnCotActionPerformed
 
-    private void btntanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btntanActionPerformed
+    private void btnTanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTanActionPerformed
         try {
             double angle = Double.parseDouble(txtDisplay.getText().trim());
             double result = Math.tan(Math.toRadians(angle));
@@ -962,7 +962,7 @@ btnCopy.setBounds(320, 20, 70, 30); }
         } catch (NumberFormatException e) {
             txtDisplay.setText("Lỗi nhập!");
         }
-    }//GEN-LAST:event_btntanActionPerformed
+    }//GEN-LAST:event_btnTanActionPerformed
 
     private void btnCosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCosActionPerformed
         try {
@@ -1131,9 +1131,9 @@ btnCopy.setBounds(320, 20, 70, 30); }
     private javax.swing.JButton btnPow;
     private javax.swing.JButton btnSin;
     private javax.swing.JButton btnSqrt;
+    private javax.swing.JButton btnTan;
     private javax.swing.JButton btnTru;
     private javax.swing.JButton btnnghichDao;
-    private javax.swing.JButton btntan;
     private javax.swing.JPanel calculatorForm;
     private javax.swing.JPanel historyMemoryForm;
     private javax.swing.JPanel historyPanel;

@@ -1,5 +1,10 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ */
+
 package calculator;
 
+<<<<<<< HEAD
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
@@ -40,6 +45,17 @@ public class Calculator {
 
         copyToClipboard(String.valueOf(result));
         System.out.println("Kết quả đã được copy vào clipboard.");
+=======
+/**
+ *
+ * @author dinhduyvinh
+ */
+public class Calculator {
+   
+    public static void main(String[] args) {
+        calculatorForm a = new calculatorForm();
+        a.setVisible(true);
+>>>>>>> 60b650e (update : sửa chức năng tính toán khoa học và giao diện)
     }
 }
 
