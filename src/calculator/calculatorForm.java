@@ -7,9 +7,6 @@ package calculator;
 import java.awt.CardLayout;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
-import java.awt.Toolkit;
-import java.awt.datatransfer.Clipboard;
-import java.awt.datatransfer.StringSelection;
 
 /**
  *
@@ -21,29 +18,12 @@ public class calculatorForm extends javax.swing.JFrame {
 
     public calculatorForm() {
         initComponents();
-       
-        
         cardLayout = (CardLayout) historyMemoryForm.getLayout();
         listMemory.setModel(listModel);
         setLocationRelativeTo(null); // Đưa app sau khi chạy vào giữa màn hình
         setResizable(false); // chặn đổi size app
-        btnCopy = new javax.swing.JButton();
-        btnCopy.setToolTipText("Copy");
-        btnCopy.setText(""); // Ẩn chữ nếu chỉ muốn icon
-
-        btnCopy.setIcon(new javax.swing.ImageIcon(getClass().getResource("E:/123/Calculator_Group4/icon")));
-
-        btnCopy.addActionListener(new java.awt.event.ActionListener() {
-    public void actionPerformed(java.awt.event.ActionEvent evt) {
-        String resultText = txtDisplay.getText();
-        StringSelection stringSelection = new StringSelection(resultText);
-        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-        clipboard.setContents(stringSelection, null);
     }
-    });
-    
-getContentPane().add(btnCopy);
-btnCopy.setBounds(320, 20, 70, 30); }
+
     private ArrayList<String> history = new ArrayList<>(); // Lưu danh sách phép tính
     private DefaultListModel<String> listModel = new DefaultListModel<>(); // Model cho JList
     private double num1 = 0, num2 = 0;// Tạo hai biến num1, num 2 để luu giá trị nhập vào
@@ -357,7 +337,7 @@ btnCopy.setBounds(320, 20, 70, 30); }
             }
         });
 
-        btnLnx.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnLnx.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnLnx.setText("ln x");
         btnLnx.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -925,7 +905,7 @@ btnCopy.setBounds(320, 20, 70, 30); }
             double result = Math.sin(Math.toRadians(angle)); // Nếu bạn đang nhập bằng độ
 
             // Tạo chuỗi kết quả
-            String expression = "Sin(" + angle + ") = " + result;
+            String expression = "sin(" + formatNumber(angle) + ") = " + result;
 
             // Hiển thị kết quả ra màn hình
             txtDisplay.setText(String.valueOf(result));
@@ -944,7 +924,7 @@ btnCopy.setBounds(320, 20, 70, 30); }
         try {
             double angle = Double.parseDouble(txtDisplay.getText().trim());
             double result = 1.0 / Math.tan(Math.toRadians(angle));
-            String expression = "Cot(" + angle + ") = " + result;
+            String expression = "cot(" + formatNumber(angle) + ") = " + result;
             txtDisplay.setText(String.valueOf(result));
             listModel.addElement(expression);
         } catch (ArithmeticException | NumberFormatException e) {
@@ -953,22 +933,30 @@ btnCopy.setBounds(320, 20, 70, 30); }
     }//GEN-LAST:event_btnCotActionPerformed
 
     private void btnTanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTanActionPerformed
-        try {
-            double angle = Double.parseDouble(txtDisplay.getText().trim());
-            double result = Math.tan(Math.toRadians(angle));
-            String expression = "Tan(" + angle + ") = " + result;
-            txtDisplay.setText(String.valueOf(result));
-            listModel.addElement(expression);
-        } catch (NumberFormatException e) {
-            txtDisplay.setText("Lỗi nhập!");
+         try {
+        double angle = Double.parseDouble(txtDisplay.getText().trim());
+
+        // Kiểm tra nếu cos(angle) gần 0 → lỗi
+        double cosValue = Math.cos(Math.toRadians(angle));
+        if (Math.abs(cosValue) < 1e-10) {
+            txtDisplay.setText("Không xác định");
+            return;
         }
+
+        double result = Math.tan(Math.toRadians(angle));
+        String expression = "tan(" + formatNumber(angle) + ") = " + result;
+        txtDisplay.setText(String.valueOf(result));
+        listModel.addElement(expression);
+    } catch (NumberFormatException e) {
+        txtDisplay.setText("Lỗi nhập!");
+    }
     }//GEN-LAST:event_btnTanActionPerformed
 
     private void btnCosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCosActionPerformed
         try {
             double angle = Double.parseDouble(txtDisplay.getText().trim());
             double result = Math.cos(Math.toRadians(angle));
-            String expression = "Cos(" + angle + ") = " + result;
+            String expression = "cos(" + formatNumber(angle) + ") = " + result;
             txtDisplay.setText(String.valueOf(result));
             listModel.addElement(expression);
         } catch (NumberFormatException e) {
@@ -1028,7 +1016,7 @@ btnCopy.setBounds(320, 20, 70, 30); }
         try {
             double value = Double.parseDouble(txtDisplay.getText().trim());
             double result = Math.log10(value);
-            String expression = "Log(" + value + ") = " + result;
+            String expression = "log(" + formatNumber(value) + ") = " + result;
             txtDisplay.setText(String.valueOf(result));
             listModel.addElement(expression);
         } catch (NumberFormatException e) {
@@ -1040,7 +1028,7 @@ btnCopy.setBounds(320, 20, 70, 30); }
         try {
             double value = Double.parseDouble(txtDisplay.getText().trim());
             double result = Math.log(value);
-            String expression = "Ln(" + value + ") = " + result;
+            String expression = "ln(" + formatNumber(value) + ") = " + result;
             txtDisplay.setText(String.valueOf(result));
             listModel.addElement(expression);
         } catch (NumberFormatException e) {
@@ -1144,6 +1132,5 @@ btnCopy.setBounds(320, 20, 70, 30); }
     private javax.swing.JPanel mainPanel;
     private javax.swing.JPanel memoryPanel;
     private javax.swing.JTextField txtDisplay;
-    private javax.swing.JButton btnCopy;
     // End of variables declaration//GEN-END:variables
 }
