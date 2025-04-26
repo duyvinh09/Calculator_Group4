@@ -8,13 +8,14 @@ import java.awt.CardLayout;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 
-
 /**
  *
  * @author dinhduyvinh
  */
 public class calculatorForm extends javax.swing.JFrame {
+
     CardLayout cardLayout;
+
     public calculatorForm() {
         initComponents();
         cardLayout = (CardLayout) historyMemoryForm.getLayout();
@@ -22,7 +23,7 @@ public class calculatorForm extends javax.swing.JFrame {
         setLocationRelativeTo(null); // Đưa app sau khi chạy vào giữa màn hình
         setResizable(false); // chặn đổi size app
     }
-    
+
     private ArrayList<String> history = new ArrayList<>(); // Lưu danh sách phép tính
     private DefaultListModel<String> listModel = new DefaultListModel<>(); // Model cho JList
     private double num1 = 0, num2 = 0;// Tạo hai biến num1, num 2 để luu giá trị nhập vào
@@ -66,6 +67,14 @@ public class calculatorForm extends javax.swing.JFrame {
         btnDelete = new javax.swing.JButton();
         btnCE = new javax.swing.JButton();
         btnC = new javax.swing.JButton();
+        btnSin = new javax.swing.JButton();
+        btnTan = new javax.swing.JButton();
+        btnCot = new javax.swing.JButton();
+        btnCos = new javax.swing.JButton();
+        btnGiaithua = new javax.swing.JButton();
+        btnChuyenDoi = new javax.swing.JButton();
+        btnLog10 = new javax.swing.JButton();
+        btnLnx = new javax.swing.JButton();
         txtDisplay = new javax.swing.JTextField();
         historyMemoryForm = new javax.swing.JPanel();
         historyPanel = new javax.swing.JPanel();
@@ -231,7 +240,7 @@ public class calculatorForm extends javax.swing.JFrame {
         });
 
         btnSqrt.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnSqrt.setText("²√2");
+        btnSqrt.setText("²√x");
         btnSqrt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSqrtActionPerformed(evt);
@@ -272,11 +281,67 @@ public class calculatorForm extends javax.swing.JFrame {
             }
         });
 
-        txtDisplay.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        txtDisplay.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "CALCULATOR", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
-        txtDisplay.addActionListener(new java.awt.event.ActionListener() {
+        btnSin.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnSin.setText("sin");
+        btnSin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtDisplayActionPerformed(evt);
+                btnSinActionPerformed(evt);
+            }
+        });
+
+        btnTan.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnTan.setText("tan");
+        btnTan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTanActionPerformed(evt);
+            }
+        });
+
+        btnCot.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnCot.setText("cot");
+        btnCot.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCotActionPerformed(evt);
+            }
+        });
+
+        btnCos.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnCos.setText("cos");
+        btnCos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCosActionPerformed(evt);
+            }
+        });
+
+        btnGiaithua.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnGiaithua.setText("n!");
+        btnGiaithua.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGiaithuaActionPerformed(evt);
+            }
+        });
+
+        btnChuyenDoi.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btnChuyenDoi.setText("°/rad");
+        btnChuyenDoi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnChuyenDoiActionPerformed(evt);
+            }
+        });
+
+        btnLog10.setFont(new java.awt.Font("Segoe UI", 1, 10)); // NOI18N
+        btnLog10.setText("log₁₀x");
+        btnLog10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLog10ActionPerformed(evt);
+            }
+        });
+
+        btnLnx.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnLnx.setText("ln x");
+        btnLnx.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLnxActionPerformed(evt);
             }
         });
 
@@ -287,44 +352,58 @@ public class calculatorForm extends javax.swing.JFrame {
             .addGroup(calculatorFormLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(calculatorFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(calculatorFormLayout.createSequentialGroup()
+                        .addComponent(btnDoiDau, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnNumber0, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnDot, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnBang, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, calculatorFormLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(calculatorFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, calculatorFormLayout.createSequentialGroup()
+                        .addGroup(calculatorFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addGroup(calculatorFormLayout.createSequentialGroup()
+                                .addComponent(btnChuyenDoi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnGiaithua, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(calculatorFormLayout.createSequentialGroup()
                                 .addComponent(btnPhanTram, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnCE, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnC, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnC, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(calculatorFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(calculatorFormLayout.createSequentialGroup()
+                                .addComponent(btnLnx, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, calculatorFormLayout.createSequentialGroup()
-                                .addComponent(btnnghichDao, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnPow, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnSqrt, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnChia, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, calculatorFormLayout.createSequentialGroup()
-                                .addComponent(btnNumber7, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnNumber8, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnNumber9, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnNhan, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, calculatorFormLayout.createSequentialGroup()
-                                .addComponent(btnNumber4, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnNumber5, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnNumber6, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnTru, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(btnLog10, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(btnDelete, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(calculatorFormLayout.createSequentialGroup()
                         .addGroup(calculatorFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtDisplay, javax.swing.GroupLayout.PREFERRED_SIZE, 278, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(calculatorFormLayout.createSequentialGroup()
+                                .addGroup(calculatorFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, calculatorFormLayout.createSequentialGroup()
+                                        .addComponent(btnnghichDao, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btnPow, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btnSqrt, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btnChia, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, calculatorFormLayout.createSequentialGroup()
+                                        .addComponent(btnNumber4, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btnNumber5, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btnNumber6, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btnTru, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(calculatorFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnSin, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnTan, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(calculatorFormLayout.createSequentialGroup()
                                 .addComponent(btnNumber1, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -332,58 +411,84 @@ public class calculatorForm extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(btnNumber3, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnCong, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(btnCong, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnCot, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(calculatorFormLayout.createSequentialGroup()
-                                .addComponent(btnDoiDau, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnNumber7, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnNumber0, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnNumber8, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnDot, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnNumber9, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnBang, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(btnNhan, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnCos, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         calculatorFormLayout.setVerticalGroup(
             calculatorFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(calculatorFormLayout.createSequentialGroup()
-                .addComponent(txtDisplay, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(calculatorFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(calculatorFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnPhanTram, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnCE, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnC, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnDelete, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(btnGiaithua, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnDelete, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnChuyenDoi, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(calculatorFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, calculatorFormLayout.createSequentialGroup()
+                        .addComponent(btnLog10, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, calculatorFormLayout.createSequentialGroup()
+                        .addGroup(calculatorFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(btnLnx, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(calculatorFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(btnC, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnCE, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnPhanTram, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(12, 12, 12)))
                 .addGroup(calculatorFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(calculatorFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnnghichDao, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnPow, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnSqrt, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnChia, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, calculatorFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnChia, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnSin, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(calculatorFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnNhan, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(calculatorFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnNhan, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnCos, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(calculatorFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnNumber7, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnNumber8, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnNumber9, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(calculatorFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(calculatorFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnNumber4, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnNumber5, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnNumber6, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(btnTru, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addGroup(calculatorFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(calculatorFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnNumber4, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnNumber5, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnNumber6, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnTru, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnTan, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(calculatorFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnCong, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(calculatorFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnNumber2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnNumber1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnNumber3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
+                    .addGroup(calculatorFormLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(calculatorFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(calculatorFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(btnNumber2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnNumber1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnNumber3, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(calculatorFormLayout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(btnCong, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, calculatorFormLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnCot, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(calculatorFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(calculatorFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnDoiDau, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -391,8 +496,16 @@ public class calculatorForm extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, calculatorFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnDot, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnBang, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                .addGap(20, 20, 20))
         );
+
+        txtDisplay.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        txtDisplay.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "CALCULATOR", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 12))); // NOI18N
+        txtDisplay.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtDisplayActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
@@ -400,14 +513,17 @@ public class calculatorForm extends javax.swing.JFrame {
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(calculatorForm, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(calculatorForm, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtDisplay, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(calculatorForm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtDisplay, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(calculatorForm, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -423,14 +539,12 @@ public class calculatorForm extends javax.swing.JFrame {
             historyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(historyPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         historyPanelLayout.setVerticalGroup(
             historyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, historyPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 429, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 506, Short.MAX_VALUE)
         );
 
         historyMemoryForm.add(historyPanel, "card2");
@@ -441,11 +555,11 @@ public class calculatorForm extends javax.swing.JFrame {
         memoryPanel.setLayout(memoryPanelLayout);
         memoryPanelLayout.setHorizontalGroup(
             memoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE)
+            .addComponent(jTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, 319, Short.MAX_VALUE)
         );
         memoryPanelLayout.setVerticalGroup(
             memoryPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, 441, Short.MAX_VALUE)
+            .addComponent(jTextField3, javax.swing.GroupLayout.DEFAULT_SIZE, 506, Short.MAX_VALUE)
         );
 
         historyMemoryForm.add(memoryPanel, "card2");
@@ -460,53 +574,62 @@ public class calculatorForm extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(mainPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(historyMemoryForm, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(72, 72, 72))))
+                .addGap(12, 12, 12)
+                .addComponent(historyMemoryForm, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(105, 105, 105))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(mainPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(30, 30, 30)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(historyMemoryForm, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(historyMemoryForm, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())
+                    .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
     // Hàm định dạng số nguyên
-    private String formatNumber(double num){
+
+    private String formatNumber(double num) {
         return (num == Math.floor(num)) ? String.valueOf((int) num) : String.valueOf(num);
     }
+
     // Hàm tính toán
-    private double  calculate(double a, String op, double b){
-        switch(op){
-            case "+": return a + b;
-            case "-": return a - b;
-            case "x": return a * b; 
+    private double calculate(double a, String op, double b) {
+        switch (op) {
+            case "+":
+                return a + b;
+            case "-":
+                return a - b;
+            case "x":
+                return a * b;
             case "/":
-                if (b == 0) return 0;
+                if (b == 0) {
+                    return 0;
+                }
                 return a / b;
-            default: return b;
+            default:
+                return b;
         }
     }
-    
+
     // Hàm xử lí toán tử
     private void operatorActionPerformed(String newOperator) {
         try {
             double temp = Double.parseDouble(txtDisplay.getText());
 
-            if (!operator.isEmpty()) { 
+            if (!operator.isEmpty()) {
                 // Nếu đã có phép toán trước đó, thực hiện tính toán
                 num2 = temp;
                 num1 = calculate(num1, operator, num2);
@@ -528,8 +651,8 @@ public class calculatorForm extends javax.swing.JFrame {
             txtDisplay.setText(e.getMessage());
         }
     }
-    
-    
+
+
     private void txtDisplayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDisplayActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtDisplayActionPerformed
@@ -672,6 +795,15 @@ public class calculatorForm extends javax.swing.JFrame {
 
     private void btnBangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBangActionPerformed
         try {
+            String expression = txtDisplay.getText().trim();
+
+            // Nếu là biểu thức đặc biệt (giai thừa)
+            if (expression.endsWith("!")) {
+                // Gọi xử lý riêng
+                tinhGiaiThua();
+                return; // Không xử lý tiếp các phép + - * /
+            }
+            // xử lí các phép tính +-*/
             double temp = Double.parseDouble(txtDisplay.getText());
 
             if (!operator.isEmpty()) {
@@ -686,6 +818,7 @@ public class calculatorForm extends javax.swing.JFrame {
 
                 // Thêm vào lịch sử
                 listModel.addElement(saveHistory);
+
             }
             operator = "";
             newInput = true; // Đánh dấu để nhập số mới
@@ -694,6 +827,8 @@ public class calculatorForm extends javax.swing.JFrame {
         } catch (ArithmeticException e) {
             txtDisplay.setText(e.getMessage());
         }
+
+
     }//GEN-LAST:event_btnBangActionPerformed
 
     private void btnCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCActionPerformed
@@ -760,6 +895,148 @@ public class calculatorForm extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnNumber0ActionPerformed
 
+    private void btnSinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSinActionPerformed
+
+        try {
+            // Lấy giá trị hiện tại từ txtDisplay
+            double angle = Double.parseDouble(txtDisplay.getText().trim());
+
+            // Tính sin (theo radian)
+            double result = Math.sin(Math.toRadians(angle)); // Nếu bạn đang nhập bằng độ
+
+            // Tạo chuỗi kết quả
+            String expression = "sin(" + formatNumber(angle) + ") = " + result;
+
+            // Hiển thị kết quả ra màn hình
+            txtDisplay.setText(String.valueOf(result));
+
+            // Lưu vào lịch sử
+            listModel.addElement(expression);
+
+        } catch (NumberFormatException e) {
+            txtDisplay.setText("Lỗi nhập!");
+        }
+
+
+    }//GEN-LAST:event_btnSinActionPerformed
+
+    private void btnCotActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCotActionPerformed
+        try {
+            double angle = Double.parseDouble(txtDisplay.getText().trim());
+            double result = 1.0 / Math.tan(Math.toRadians(angle));
+            String expression = "cot(" + formatNumber(angle) + ") = " + result;
+            txtDisplay.setText(String.valueOf(result));
+            listModel.addElement(expression);
+        } catch (ArithmeticException | NumberFormatException e) {
+            txtDisplay.setText("Lỗi!");
+        }
+    }//GEN-LAST:event_btnCotActionPerformed
+
+    private void btnTanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTanActionPerformed
+         try {
+        double angle = Double.parseDouble(txtDisplay.getText().trim());
+
+        // Kiểm tra nếu cos(angle) gần 0 → lỗi
+        double cosValue = Math.cos(Math.toRadians(angle));
+        if (Math.abs(cosValue) < 1e-10) {
+            txtDisplay.setText("Không xác định");
+            return;
+        }
+
+        double result = Math.tan(Math.toRadians(angle));
+        String expression = "tan(" + formatNumber(angle) + ") = " + result;
+        txtDisplay.setText(String.valueOf(result));
+        listModel.addElement(expression);
+    } catch (NumberFormatException e) {
+        txtDisplay.setText("Lỗi nhập!");
+    }
+    }//GEN-LAST:event_btnTanActionPerformed
+
+    private void btnCosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCosActionPerformed
+        try {
+            double angle = Double.parseDouble(txtDisplay.getText().trim());
+            double result = Math.cos(Math.toRadians(angle));
+            String expression = "cos(" + formatNumber(angle) + ") = " + result;
+            txtDisplay.setText(String.valueOf(result));
+            listModel.addElement(expression);
+        } catch (NumberFormatException e) {
+            txtDisplay.setText("Lỗi nhập!");
+        }
+    }//GEN-LAST:event_btnCosActionPerformed
+
+    private void btnGiaithuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGiaithuaActionPerformed
+
+        String input = txtDisplay.getText().trim();
+        if (!input.isEmpty() && !input.endsWith("!")) {
+            txtDisplay.setText(input + "!");
+        }
+
+    }//GEN-LAST:event_btnGiaithuaActionPerformed
+    public void tinhGiaiThua() {
+        try {
+            String input = txtDisplay.getText().trim(); // Lấy chuỗi biểu thức từ màn hình
+
+            // Xử lý giai thừa n!
+            if (input.endsWith("!")) {
+                String numStr = input.substring(0, input.length() - 1);
+                int num = Integer.parseInt(numStr);
+                long result = 1;
+                for (int i = 2; i <= num; i++) {
+                    result *= i;
+                }
+                txtDisplay.setText(String.valueOf(result));
+                // Lưu vào lịch sử
+                listModel.addElement(input + " = " + result);
+                return;
+            }
+
+        } catch (Exception ex) {
+            txtDisplay.setText("Lỗi");
+        }
+    }
+
+    private void btnChuyenDoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChuyenDoiActionPerformed
+        try {
+            double val = Double.parseDouble(txtDisplay.getText());
+            String result;
+            if (val > 2 * Math.PI) {
+                // Chuyển từ Độ sang Radian
+                result = String.valueOf(Math.toRadians(val));
+            } else {
+                // Chuyển từ Radian sang Độ
+                result = String.valueOf(Math.toDegrees(val));
+            }
+            txtDisplay.setText(result);
+        } catch (Exception ex) {
+            txtDisplay.setText("Lỗi");
+        }
+    }//GEN-LAST:event_btnChuyenDoiActionPerformed
+
+    private void btnLog10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLog10ActionPerformed
+        try {
+            double value = Double.parseDouble(txtDisplay.getText().trim());
+            double result = Math.log10(value);
+            String expression = "log(" + formatNumber(value) + ") = " + result;
+            txtDisplay.setText(String.valueOf(result));
+            listModel.addElement(expression);
+        } catch (NumberFormatException e) {
+            txtDisplay.setText("Lỗi nhập!");
+        }
+    }//GEN-LAST:event_btnLog10ActionPerformed
+
+    private void btnLnxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLnxActionPerformed
+        try {
+            double value = Double.parseDouble(txtDisplay.getText().trim());
+            double result = Math.log(value);
+            String expression = "ln(" + formatNumber(value) + ") = " + result;
+            txtDisplay.setText(String.valueOf(result));
+            listModel.addElement(expression);
+        } catch (NumberFormatException e) {
+            txtDisplay.setText("Lỗi nhập!");
+        }
+
+    }//GEN-LAST:event_btnLnxActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -817,10 +1094,16 @@ public class calculatorForm extends javax.swing.JFrame {
     private javax.swing.JButton btnC;
     private javax.swing.JButton btnCE;
     private javax.swing.JButton btnChia;
+    private javax.swing.JButton btnChuyenDoi;
     private javax.swing.JButton btnCong;
+    private javax.swing.JButton btnCos;
+    private javax.swing.JButton btnCot;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnDoiDau;
     private javax.swing.JButton btnDot;
+    private javax.swing.JButton btnGiaithua;
+    private javax.swing.JButton btnLnx;
+    private javax.swing.JButton btnLog10;
     private javax.swing.JButton btnNhan;
     private javax.swing.JButton btnNumber0;
     private javax.swing.JButton btnNumber1;
@@ -834,7 +1117,9 @@ public class calculatorForm extends javax.swing.JFrame {
     private javax.swing.JButton btnNumber9;
     private javax.swing.JButton btnPhanTram;
     private javax.swing.JButton btnPow;
+    private javax.swing.JButton btnSin;
     private javax.swing.JButton btnSqrt;
+    private javax.swing.JButton btnTan;
     private javax.swing.JButton btnTru;
     private javax.swing.JButton btnnghichDao;
     private javax.swing.JPanel calculatorForm;
