@@ -431,10 +431,10 @@ public class calculatorForm extends javax.swing.JFrame {
             calculatorFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(calculatorFormLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(calculatorFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnGiaithua, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnDelete, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnChuyenDoi, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(calculatorFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btnGiaithua, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+                    .addComponent(btnChuyenDoi, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+                    .addComponent(btnDelete, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(calculatorFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, calculatorFormLayout.createSequentialGroup()
@@ -973,27 +973,35 @@ public class calculatorForm extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnGiaithuaActionPerformed
     public void tinhGiaiThua() {
-        try {
-            String input = txtDisplay.getText().trim(); // Lấy chuỗi biểu thức từ màn hình
+    try {
+        String input = txtDisplay.getText().trim(); // Lấy chuỗi biểu thức từ màn hình
 
-            // Xử lý giai thừa n!
-            if (input.endsWith("!")) {
-                String numStr = input.substring(0, input.length() - 1);
-                int num = Integer.parseInt(numStr);
-                long result = 1;
-                for (int i = 2; i <= num; i++) {
-                    result *= i;
-                }
-                txtDisplay.setText(String.valueOf(result));
-                // Lưu vào lịch sử
-                listModel.addElement(input + " = " + result);
+        // Xử lý giai thừa n!
+        if (input.endsWith("!")) {
+            String numStr = input.substring(0, input.length() - 1); // Cắt dấu "!"
+            double number = Double.parseDouble(numStr); // Dùng double để kiểm tra số lẻ
+
+            // Kiểm tra lỗi: số âm hoặc thập phân
+            if (number < 0 || number != Math.floor(number)) {
+                txtDisplay.setText("Không xác định");            
                 return;
             }
 
-        } catch (Exception ex) {
-            txtDisplay.setText("Lỗi");
+            // Nếu hợp lệ thì tính giai thừa
+            int num = (int) number; // Ép thành int vì chắc chắn là số nguyên
+            long result = 1;
+            for (int i = 2; i <= num; i++) {
+                result *= i;
+            }
+
+            txtDisplay.setText(String.valueOf(result));
+            listModel.addElement(input + " = " + result);
         }
+
+    } catch (Exception ex) {
+        txtDisplay.setText("Lỗi");
     }
+}
 
     private void btnChuyenDoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChuyenDoiActionPerformed
         try {
@@ -1015,6 +1023,10 @@ public class calculatorForm extends javax.swing.JFrame {
     private void btnLog10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLog10ActionPerformed
         try {
             double value = Double.parseDouble(txtDisplay.getText().trim());
+          if (value <= 0) {
+            txtDisplay.setText("Không xác định");
+            return;
+        }
             double result = Math.log10(value);
             String expression = "log(" + formatNumber(value) + ") = " + result;
             txtDisplay.setText(String.valueOf(result));
@@ -1027,6 +1039,10 @@ public class calculatorForm extends javax.swing.JFrame {
     private void btnLnxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLnxActionPerformed
         try {
             double value = Double.parseDouble(txtDisplay.getText().trim());
+            if (value <= 0) {
+            txtDisplay.setText("Không xác định");
+            return;
+        }
             double result = Math.log(value);
             String expression = "ln(" + formatNumber(value) + ") = " + result;
             txtDisplay.setText(String.valueOf(result));
