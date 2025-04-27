@@ -32,9 +32,10 @@ public class calculatorForm extends javax.swing.JFrame {
     
     CardLayout cardLayout;
     
-    private boolean darkMode = false; // Thêm biến để theo dõi trạng thái dark mode
+    private boolean darkMode = false; // Theo dõi trạng thái dark mode
     private ImageIcon darkIcon;
     private ImageIcon lightIcon;
+    private Color customLightBackground; // Lưu màu nền tùy chỉnh cho light mode
     
     public calculatorForm() {
         initComponents();
@@ -42,17 +43,19 @@ public class calculatorForm extends javax.swing.JFrame {
         listMemory.setModel(listModel);
         setLocationRelativeTo(null); // Đưa app sau khi chạy vào giữa màn hình
         setResizable(false); // chặn đổi size app
+        
         try (BufferedReader reader = new BufferedReader(new FileReader("history.txt"))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 listModel.addElement(line);
             }
         } catch (IOException e) {
-            System.out.println("Không thể đọc lịch sử: " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Không thể đọc lịch sử: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
         }  
         
         darkIcon = new ImageIcon(getClass().getResource("/calculator/moon.png")); // Icon mặt trăng cho dark mode
         lightIcon = new ImageIcon(getClass().getResource("/calculator/sun.png")); // Icon mặt trời cho light mode
+        customLightBackground = new Color(238, 238, 238); // Màu nền light mode mặc định
         applyLightMode(); // Áp dụng light mode mặc định khi khởi động
         btnCopy.setVisible(false); // Vô hiệu hóa nút Copy khi khởi tạo
         
@@ -124,7 +127,7 @@ public class calculatorForm extends javax.swing.JFrame {
     private ArrayList<String> history = new ArrayList<>(); // Lưu danh sách phép tính
     private DefaultListModel<String> listModel = new DefaultListModel<>(); // Model cho JList
     private double num1 = 0, num2 = 0;// Tạo hai biến num1, num 2 để luu giá trị nhập vào
-    private double result;// biến resuilt để lưu kết quả
+    private double result;// biến result để lưu kết quả
     private String operator = "";//biến chỉ toán tử
     private boolean newInput = true; // Đánh dấu để nhập số mới
     private String saveHistory = "";// Để luu toàn bộ phép tính
@@ -135,11 +138,12 @@ public class calculatorForm extends javax.swing.JFrame {
     // Phương thức áp dụng Dark Mode
     private void applyDarkMode() {
         // Đặt màu nền
-        mainPanel.setBackground(new Color(30, 30, 30));
-        calculatorForm.setBackground(new Color(30, 30, 30));
-        historyMemoryForm.setBackground(new Color(30, 30, 30));
-        historyPanel.setBackground(new Color(30, 30, 30));
-        memoryPanel.setBackground(new Color(30, 30, 30));
+        Color darkBackground = new Color(30, 30, 30);
+        mainPanel.setBackground(darkBackground);
+        calculatorForm.setBackground(darkBackground);
+        historyMemoryForm.setBackground(darkBackground);
+        historyPanel.setBackground(darkBackground);
+        memoryPanel.setBackground(darkBackground);
         
         // Đặt màu cho display
         txtDisplay.setBackground(new Color(50, 50, 50));
@@ -170,11 +174,11 @@ public class calculatorForm extends javax.swing.JFrame {
     // Phương thức áp dụng Light Mode
     private void applyLightMode() {
         // Đặt màu nền
-        mainPanel.setBackground(new Color(238, 238, 238));
-        calculatorForm.setBackground(new Color(238, 238, 238));
-        historyMemoryForm.setBackground(new Color(238, 238, 238));
-        historyPanel.setBackground(new Color(238, 238, 238));
-        memoryPanel.setBackground(new Color(238, 238, 238));
+        mainPanel.setBackground(customLightBackground);
+        calculatorForm.setBackground(customLightBackground);
+        historyMemoryForm.setBackground(customLightBackground);
+        historyPanel.setBackground(customLightBackground);
+        memoryPanel.setBackground(customLightBackground);
         
         // Đặt màu cho display
         txtDisplay.setBackground(Color.WHITE);
@@ -208,7 +212,7 @@ public class calculatorForm extends javax.swing.JFrame {
             btnNumber0, btnDoiDau, btnDot, btnBang, btnNumber2, btnNumber1, btnNumber3,
             btnCong, btnTru, btnNumber4, btnNumber5, btnNumber6, btnNumber7, btnNumber9,
             btnNumber8, btnNhan, btnnghichDao, btnPow, btnChia, btnSqrt, btnPhanTram,
-            btnDelete, btnCE, btnC, btnForward, btnBackspace, btnChuyenDoi, btnGiaithua,
+            btnDelete, btnDeleteSelected, btnCE, btnC, btnForward, btnBackspace, btnChuyenDoi, btnGiaithua,
             btnLnx, btnLog10, btnSin, btnCos, btnTan, btnCot, btnRemove, btnSearch, btnCopy
         };
         
@@ -223,60 +227,90 @@ public class calculatorForm extends javax.swing.JFrame {
     }
     
     // Phương thức áp dụng phông chữ cho các thành phần giao diện
-    private void applyFontToComponents(Font font) {
+    private void applyFontToComponents(String fontName) {
         // Áp dụng phông chữ cho các nút
         javax.swing.JButton[] buttons = {
             btnNumber0, btnDoiDau, btnDot, btnBang, btnNumber2, btnNumber1, btnNumber3,
             btnCong, btnTru, btnNumber4, btnNumber5, btnNumber6, btnNumber7, btnNumber9,
             btnNumber8, btnNhan, btnnghichDao, btnPow, btnChia, btnSqrt, btnPhanTram,
-            btnDelete, btnCE, btnC, btnForward, btnBackspace, btnChuyenDoi, btnGiaithua,
+            btnDelete, btnDeleteSelected, btnCE, btnC, btnForward, btnBackspace, btnChuyenDoi, btnGiaithua,
             btnLnx, btnLog10, btnSin, btnCos, btnTan, btnCot, btnRemove, btnSearch, btnCopy
         };
         for (javax.swing.JButton button : buttons) {
-            button.setFont(font);
+            if (button != null) {
+                Font currentFont = button.getFont();
+                button.setFont(new Font(fontName, currentFont.getStyle(), currentFont.getSize()));
+            }
         }
-        
-        // Áp dụng phông chữ cho txtDisplay
-        txtDisplay.setFont(font);
-        
-        // Áp dụng phông chữ cho listMemory
-        listMemory.setFont(font);
-        
-        // Áp dụng phông chữ cho jLabel1
-        jLabel1.setFont(font);
-        
-        // Áp dụng phông chữ cho nút toggle mode
-        btnToggleMode.setFont(font);
+        if (txtDisplay != null) {
+            Font txtDisplayFont = txtDisplay.getFont();
+            txtDisplay.setFont(new Font(fontName, txtDisplayFont.getStyle(), txtDisplayFont.getSize()));
+        }
+        if (listMemory != null) {
+            Font listMemoryFont = listMemory.getFont();
+            listMemory.setFont(new Font(fontName, listMemoryFont.getStyle(), listMemoryFont.getSize()));
+        }
+        if (jLabel1 != null) {
+            Font jLabel1Font = jLabel1.getFont();
+            jLabel1.setFont(new Font(fontName, jLabel1Font.getStyle(), jLabel1Font.getSize()));
+        }
+        if (btnToggleMode != null) {
+            Font btnToggleModeFont = btnToggleMode.getFont();
+            btnToggleMode.setFont(new Font(fontName, btnToggleModeFont.getStyle(), btnToggleModeFont.getSize()));
+        }
+    }
+    
+    // Phương thức khôi phục phông chữ mặc định như lúc khởi tạo
+    private void resetFontsToDefault() {
+        // Khôi phục phông chữ từ initComponents
+        btnNumber0.setFont(new java.awt.Font("Segoe UI", 0, 18));
+        btnDoiDau.setFont(new java.awt.Font("Segoe UI", 1, 18));
+        btnDot.setFont(new java.awt.Font("Segoe UI", 1, 24));
+        btnBang.setFont(new java.awt.Font("Segoe UI", 1, 24));
+        btnNumber1.setFont(new java.awt.Font("Segoe UI", 0, 14));
+        btnNumber2.setFont(new java.awt.Font("Segoe UI", 0, 14));
+        btnNumber3.setFont(new java.awt.Font("Segoe UI", 0, 14));
+        btnCong.setFont(new java.awt.Font("Segoe UI", 1, 24));
+        btnTru.setFont(new java.awt.Font("Segoe UI", 1, 24));
+        btnNumber4.setFont(new java.awt.Font("Segoe UI", 0, 14));
+        btnNumber5.setFont(new java.awt.Font("Segoe UI", 0, 14));
+        btnNumber6.setFont(new java.awt.Font("Segoe UI", 0, 14));
+        btnNumber7.setFont(new java.awt.Font("Segoe UI", 0, 14));
+        btnNumber8.setFont(new java.awt.Font("Segoe UI", 0, 14));
+        btnNumber9.setFont(new java.awt.Font("Segoe UI", 0, 14));
+        btnNhan.setFont(new java.awt.Font("Segoe UI", 1, 18));
+        btnnghichDao.setFont(new java.awt.Font("Segoe UI", 1, 14));
+        btnPow.setFont(new java.awt.Font("Segoe UI", 1, 14));
+        btnChia.setFont(new java.awt.Font("Segoe UI", 1, 18));
+        btnSqrt.setFont(new java.awt.Font("Segoe UI", 1, 14));
+        btnPhanTram.setFont(new java.awt.Font("Segoe UI", 1, 14));
+        btnDelete.setFont(new java.awt.Font("Segoe UI", 1, 18));
+        btnCE.setFont(new java.awt.Font("Segoe UI", 1, 14));
+        btnC.setFont(new java.awt.Font("Segoe UI", 1, 14));
+        btnForward.setFont(new java.awt.Font("Segoe UI", 0, 12));
+        btnBackspace.setFont(new java.awt.Font("Segoe UI", 0, 12));
+        btnChuyenDoi.setFont(new java.awt.Font("Segoe UI", 1, 14));
+        btnGiaithua.setFont(new java.awt.Font("Segoe UI", 1, 14));
+        btnLnx.setFont(new java.awt.Font("Segoe UI", 1, 14));
+        btnLog10.setFont(new java.awt.Font("Segoe UI", 1, 14));
+        btnSin.setFont(new java.awt.Font("Segoe UI", 1, 14));
+        btnCos.setFont(new java.awt.Font("Segoe UI", 1, 14));
+        btnTan.setFont(new java.awt.Font("Segoe UI", 1, 14));
+        btnCot.setFont(new java.awt.Font("Segoe UI", 1, 14));
+        btnCopy.setFont(new java.awt.Font("Segoe UI", 0, 12));
+        btnSearch.setFont(new java.awt.Font("Segoe UI", 0, 12));
+        btnDeleteSelected.setFont(new java.awt.Font("Segoe UI", 0, 12));
+        btnRemove.setFont(new java.awt.Font("Segoe UI", 0, 12));
+        txtDisplay.setFont(new java.awt.Font("Segoe UI", 0, 18));
+        listMemory.setFont(new java.awt.Font("Segoe UI", 0, 14));
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18));
+        btnToggleMode.setFont(new java.awt.Font("Segoe UI", 0, 14));
     }
 
     // Phương thức áp dụng màu nền tùy chỉnh
     private void applyCustomBackground(Color color) {
-        mainPanel.setBackground(color);
-        calculatorForm.setBackground(color);
-        historyMemoryForm.setBackground(color);
-        historyPanel.setBackground(color);
-        memoryPanel.setBackground(color);
-        
-        // Điều chỉnh màu chữ và viền của txtDisplay dựa trên độ sáng của màu nền
-        float[] hsb = Color.RGBtoHSB(color.getRed(), color.getGreen(), color.getBlue(), null);
-        boolean isDarkBackground = hsb[2] < 0.5; // Nếu độ sáng < 50%, coi là nền tối
-        Color textColor = isDarkBackground ? Color.WHITE : Color.BLACK;
-        
-        txtDisplay.setBackground(color.brighter());
-        txtDisplay.setForeground(textColor);
-        txtDisplay.setBorder(javax.swing.BorderFactory.createTitledBorder(
-            null, "CALCULATOR", 
-            javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, 
-            javax.swing.border.TitledBorder.DEFAULT_POSITION, 
-            txtDisplay.getFont(), textColor));
-        
-        // Điều chỉnh màu chữ của listMemory và jLabel1
-        listMemory.setBackground(color.brighter());
-        listMemory.setForeground(textColor);
-        jLabel1.setForeground(textColor);
-        
-        // Cập nhật màu nút dựa trên chế độ tối/sáng
-        styleButtons(color.brighter(), textColor);
+        customLightBackground = color; // Lưu màu nền tùy chỉnh làm light mode
+        applyLightMode(); // Áp dụng light mode với màu mới
     }
 
     /**
@@ -339,16 +373,17 @@ public class calculatorForm extends javax.swing.JFrame {
         btnRemove = new javax.swing.JButton();
         txtSearch = new javax.swing.JTextField();
         btnSearch = new javax.swing.JButton();
+        btnDeleteSelected = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         JMenu = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenuItem3 = new javax.swing.JMenuItem();
 
-        jMenu1.setText(null);
+        jMenu1.setText("null");
         jMenuBar2.add(jMenu1);
 
-        jMenu2.setText(null);
+        jMenu2.setText("null");
         jMenuBar2.add(jMenu2);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -869,6 +904,13 @@ public class calculatorForm extends javax.swing.JFrame {
             }
         });
 
+        btnDeleteSelected.setText("Delete");
+        btnDeleteSelected.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteSelectedActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout historyPanelLayout = new javax.swing.GroupLayout(historyPanel);
         historyPanel.setLayout(historyPanelLayout);
         historyPanelLayout.setHorizontalGroup(
@@ -881,7 +923,10 @@ public class calculatorForm extends javax.swing.JFrame {
                         .addGap(46, 46, 46))
                     .addGroup(historyPanelLayout.createSequentialGroup()
                         .addGroup(historyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnRemove, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, historyPanelLayout.createSequentialGroup()
+                                .addComponent(btnDeleteSelected)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnRemove))
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnSearch, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap())))
@@ -895,7 +940,9 @@ public class calculatorForm extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnRemove)
+                .addGroup(historyPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnRemove)
+                    .addComponent(btnDeleteSelected))
                 .addContainerGap())
         );
 
@@ -969,7 +1016,7 @@ public class calculatorForm extends javax.swing.JFrame {
             writer.write(history);
             writer.newLine();
         } catch (IOException e) {
-            System.out.println("Lỗi khi ghi file: " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Lỗi khi ghi file: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
         }
     }
     
@@ -1359,8 +1406,7 @@ public class calculatorForm extends javax.swing.JFrame {
             if (!e.getValueIsAdjusting()) {
                 String selectedFont = fontList.getSelectedValue();
                 if (selectedFont != null) {
-                    // Áp dụng phông chữ mới với kích thước mặc định là 18
-                    applyFontToComponents(new Font(selectedFont, Font.PLAIN, 18));
+                    applyFontToComponents(selectedFont);
                     fontDialog.dispose();
                 }
             }
@@ -1374,14 +1420,17 @@ public class calculatorForm extends javax.swing.JFrame {
         // Mở JColorChooser để chọn màu nền
         Color selectedColor = JColorChooser.showDialog(this, "Chọn màu nền", mainPanel.getBackground());
         if (selectedColor != null) {
+            darkMode = false; // Chuyển về light mode khi chọn màu
             applyCustomBackground(selectedColor);
+            btnToggleMode.setIcon(darkIcon); // Cập nhật icon để chuyển sang dark mode
         }
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         // TODO add your handling code here:
-        applyLightMode();
-        applyFontToComponents(new Font("Segoe UI", Font.PLAIN, 18));
+        customLightBackground = new Color(238, 238, 238); // Reset màu nền light mode
+        applyLightMode(); // Áp dụng light mode mặc định
+        resetFontsToDefault(); // Khôi phục phông chữ mặc định
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void btnRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRemoveActionPerformed
@@ -1395,7 +1444,7 @@ public class calculatorForm extends javax.swing.JFrame {
             try (BufferedWriter writer = new BufferedWriter(new FileWriter("history.txt"))) {
                 writer.write("");
             } catch (IOException e) {
-                System.out.println("Lỗi khi xóa file: " + e.getMessage());
+                JOptionPane.showMessageDialog(this, "Lỗi khi xóa file: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
             }
         }
     }//GEN-LAST:event_btnRemoveActionPerformed
@@ -1415,12 +1464,30 @@ public class calculatorForm extends javax.swing.JFrame {
         // Duyệt từng dòng lịch sử trong listModel gốc
         for (int i = 0; i < listModel.size(); i++) {
             String entry = listModel.get(i); // lấy dòng hiện tại từ lịch sử
+            
             // Chỉ lấy phần biểu thức trước dấu "=" (bỏ kết quả)
             // Sau đó bỏ khoảng trắng và chuyển về chữ thường để so sánh
             String expressionOnly = entry.split("=")[0].replaceAll("\\s+", "").toLowerCase();
+            String resultOnly = "";
+            if (entry.contains("=")) {
+                resultOnly = entry.split("=")[1].replaceAll("\\s+", "").toLowerCase();
+            }
             // Nếu biểu thức chứa từ khóa tìm kiếm thì thêm vào danh sách lọc
+            // Nếu biểu thức chứa từ khóa -> ok
             if (expressionOnly.contains(keyword)) {
-            filteredModel.addElement(entry); // thêm dòng gốc vào model mới
+                filteredModel.addElement(entry);
+            } else {
+                // Nếu kết quả đúng chính xác thì mới cho vào
+                try {
+                    double searchResult = Double.parseDouble(keyword);
+                    double actualResult = Double.parseDouble(resultOnly);
+
+                    if (searchResult == actualResult) {
+                        filteredModel.addElement(entry);
+                    }
+                } catch (NumberFormatException e) {
+                // Nếu không parse được số thì bỏ qua kết quả
+                }
             }
         }   
 
@@ -1661,6 +1728,44 @@ public class calculatorForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCopyActionPerformed
 
     /**
+    * Ghi toàn bộ lịch sử phép tính hiện tại trong listModel vào file "history.txt".
+    * File sẽ được ghi đè hoàn toàn (không thêm vào cuối).
+    * 
+    * Cách làm:
+    * - Duyệt từng phần tử (phép tính) trong listModel.
+    * - Ghi từng phép tính vào file, mỗi phép tính trên 1 dòng.
+    * 
+    * Nếu xảy ra lỗi IO (ví dụ lỗi quyền ghi file) thì sẽ in lỗi ra console.
+    */
+    private void saveHistoryToFile() {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("history.txt"))) {
+            // Duyệt qua toàn bộ các phép tính trong listModel
+            for (int i = 0; i < listModel.size(); i++) {
+                writer.write(listModel.get(i)); // Ghi phép tính vào file
+                writer.newLine(); // Xuống dòng sau mỗi phép tính
+            }
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Lỗi khi ghi file: " + e.getMessage(), "Lỗi", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    private void btnDeleteSelectedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteSelectedActionPerformed
+        // TODO add your handling code here:
+        int selectedIndex = listMemory.getSelectedIndex();
+         if (selectedIndex != -1) {
+            // Nếu có chọn phép tính nào
+            int confirm = JOptionPane.showConfirmDialog(this, "Do you want to delete the selected history?", "Confirm", JOptionPane.YES_NO_OPTION);
+            if (confirm == JOptionPane.YES_OPTION) {
+                listModel.remove(selectedIndex);
+                saveHistoryToFile();
+            }
+        } else {
+            // Nếu chưa chọn phép tính nào thì chỉ báo lỗi thôi
+            JOptionPane.showMessageDialog(this, "Please select a history item to delete.", "Warning", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_btnDeleteSelectedActionPerformed
+
+    /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
@@ -1708,6 +1813,7 @@ public class calculatorForm extends javax.swing.JFrame {
     private javax.swing.JButton btnCos;
     private javax.swing.JButton btnCot;
     private javax.swing.JButton btnDelete;
+    private javax.swing.JButton btnDeleteSelected;
     private javax.swing.JButton btnDoiDau;
     private javax.swing.JButton btnDot;
     private javax.swing.JButton btnForward;
