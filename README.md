@@ -30,11 +30,11 @@
   - Hỗ trợ phím tắt (keyboard shortcuts) cho phép tính.
   - Thêm nút CE (Clear Entry), Backspace (←), và Forward (→).
 
-- **Nguyễn Hoàng Nhật**\
-  **Nhiệm vụ**: Biểu thức & Clipboard
+- ~~**Nguyễn Hoàng Nhật**~~\
+    **Nhiệm vụ**: Biểu thức & Clipboard
 
-  - Hỗ trợ tính toán biểu thức phức tạp (ví dụ: "5 + (3 * 2) - √9").
-  - Chức năng sao chép/dán (copy/paste) kết quả.
+    - Hỗ trợ tính toán biểu thức phức tạp (ví dụ: "5 + (3 * 2) - √9").
+    - **Đã được thực hiện bởi Đinh Duy Vinh**: Chức năng sao chép/dán (copy/paste) kết quả.
 
 ## Tính năng
 
